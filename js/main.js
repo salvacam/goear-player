@@ -1,5 +1,8 @@
 var lista = [];
-var playlist = "";
+var nombre_busqueda = "";
+var reproducir_mas_canciones = false;
+var reproducir_menos_canciones = false;
+var reproduce_radio = false;
 var pos = 0;
 var pause = 1;
 var pagina = 0;
@@ -33,14 +36,14 @@ function eventos_canciones(){
 	if ( !$("#pagina_mas").hasClass("disabled") ) {
 		$("#pagina_mas").on( 'click', function(){
 			pagina++;
-			buscar_canciones($(this).data('nombre'), pagina);
+			buscar_canciones($(this).data('nombre'), pagina, false);
 		});	
 	}
 	$("#pagina_menos").off();
 	if ( !$("#pagina_menos").hasClass("disabled") ) {
 		$("#pagina_menos").on( 'click', function(){
 			pagina--;
-			buscar_canciones($(this).data('nombre'), pagina);
+			buscar_canciones($(this).data('nombre'), pagina, false);
 		});	
 	}
 }
@@ -78,102 +81,134 @@ function desactivar_eventos(){
 	$("#slider").attr("value", porcentaje(1, 100));
 }
 
-
-$("#buscar_playlist").on("click", function (e) {
-    e.preventDefault();
-    if ($("#nombre").val() == "") {
-        $("#listado").empty();
-        $("#listado").text("Introduce nombre playlist");
-    } else {
-		pagina = 0;
-        buscar_playlist($("#nombre").val(), pagina);
-    }
-});
-
 $("#buscar_canciones").on("click", function (e) {
     e.preventDefault();
     if ($("#nombre").val() == "") {
         $("#listado").empty();
-        $("#listado").text("Introduce nombre busqueda");
+        $("#listado").text("Enter search area");
+		$("#listado").prepend("<br/>");
     } else {
 		pagina = 0;
         buscar_canciones($("#nombre").val(), pagina);
     }
 });
 
-function buscar_canciones(nombre, pagina) {
-	desactivar_eventos();
+$("#buscar_playlist").on("click", function (e) {
+    e.preventDefault();
+    if ($("#nombre").val() == "") {
+        $("#listado").empty();
+        $("#listado").text("Enter search area");
+		$("#listado").prepend("<br/>");
+    } else {
+		pagina = 0;
+        buscar_playlist($("#nombre").val(), pagina);
+    }
+});
+
+$("#buscar_radio").on("click", function (e) {
+    e.preventDefault();
+    if ($("#nombre").val() == "") {
+        $("#listado").empty();
+        $("#listado").text("Enter search area");
+		$("#listado").prepend("<br/>");
+    } else {
+		pagina = 0;
+        buscar_radio($("#nombre").val(), pagina);
+    }
+});
+
+function buscar_canciones(nombre, pagina, vuelve_atras) {	
+	nombre_busqueda = nombre;
+	desactivar_eventos();  	
+    reproducir_mas_canciones = false;
+    reproducir_menos_canciones = false;    
+    reproduce_radio = false;  
     $("#listado").empty();
-    $("#listado").append("<h5>Serach songs: " + nombre + "</h5>");
 
     var contentType = "application/x-www-form-urlencoded; charset=utf-8";
     $.ajax({
         type: 'GET',
         url: "http://salvacam.x10.mx/radio/index.php?type=songs&url=" + encodeURI(nombre) +"&p="+pagina,
+        //url: "http://localhost/radio/index.php?type=songs&url=" + encodeURI(nombre) +"&p="+pagina,
         dataType: 'json',
         success: function (data) {
             $("#listado").empty();
-            /*
-            {"id":"afbf45e","title":"Jimmy Jazz","artist":"kortatu","mp3path":"http:\/\/www.goear.com\/plimiter.php?f=afbf45e","imgpath":"http:\/\/www.goear.com\/band\/soundpicture\/afbf45e","songtime":"2:07"}
-            */
             if (data.r != 0) {
                 $("#listado").append("<h5>No songs</h5>");
             } else {
                 if (data.info.length < 1) {
                     $("#listado").append("<h5>No songs</h5>");
                 } else {
-                    $("#listado").append("<h5>Songs</h5>");
                     lista = [];
+                    var incluir = '<table class="pure-table pure-table-horizontal">'+
+							'<thead><tr><th>Artist</th><th>Title</th></tr></thead><tbody>';
+                    
                     for (var i = 0; i < data.info.length; i++) {
-                        console.log(data.info[i]);
                         lista.push(data.info[i].id);
-                        $("#listado").append("<a class='lista' data-list='" + i + "' data-src='"+ data.info[i].id +"'>" + /* "' onclick='escuchar(data.info[i][0])'>" +*/
-                            data.info[i].artist + "&nbsp;&nbsp;" + data.info[i].title + "</a>");
-                        $("#listado").append("<br/>");
-                    }
+                        if ( i % 2 == 0  ) {
+							incluir += "<tr class='lista' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id +"'>" + /* "' onclick='escuchar(data.info[i][0])'>" +*/
+								"<td>"+data.info[i].artist + "</td><td>" + data.info[i].title + "</td></tr>";
+						} else {
+							incluir +="<tr class='lista pure-table-odd' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id +"'>" + /* "' onclick='escuchar(data.info[i][0])'>" +*/
+								"<td>"+data.info[i].artist + "</td><td>" + data.info[i].title + "</td></tr>";
+						}
+					}
+                    incluir += "</tbody></table>";
+                    $("#listado").append(incluir);
                     if (pagina == 0) {
-						if (data.mas != undefined) {
+						if (data.mas != undefined) {                                                             
+							reproducir_mas_canciones = true;
 							$("#listado").append("<br/><button id='pagina_menos' class='disabled' disabled>&larr;</button>");
 							$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
 							$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
 						}
-					} else {						
+					} else {	
+						reproducir_menos_canciones = true;					
 						$("#listado").append("<br/><button id='pagina_menos' data-nombre='"+ nombre +"'>&larr;</button>");
 						$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
-						if (data.mas != undefined) {
+						if (data.mas != undefined) {    
+							reproducir_mas_canciones = true;                                                        
 							$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
 						} else {
 							$("#listado").append("<button id='pagina_mas' class='disabled' disabled>&rarr;</button>");
 						}
 					}
-                    escuchar(lista[0],pos);
+					if ( !vuelve_atras ) {
+						escuchar(lista[0],0);
+                    } else {
+						escuchar(lista[0], lista.length-1);
+                    }
                     //cargar los eventos
-                    eventos_canciones();
+                    eventos_canciones();           
                 }
 
             }
         },
-        beforeSend: function () {
+        beforeSend: function () {			
+			$("#listado").append("<h5>Serach songs: " + nombre + "</h5>");
             $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');
         },
         error: function (jqXHR, textStatus, ex) {
             $("#listado").empty();
-            $("#listado").append("<h5>No se ha podido buscar</h5>");
+            $("#listado").append("<h5>No songs</h5>");
         }
     });
 }
 
 function buscar_playlist(nombre, pag) {
-	playlist = nombre;
+	nombre_busqueda = nombre;
 	desactivar_eventos();
+    reproducir_mas_canciones = false;
+    reproducir_menos_canciones = false;
+    reproduce_radio = false;
     $("#listado").empty();
-    $("#listado").append("<h5> Search playlist: " + nombre + "</h5>");
     var contentType = "application/x-www-form-urlencoded; charset=utf-8";
     $.ajax({
         type: 'GET',
         url: "http://salvacam.x10.mx/radio/index.php?type=playlist&url=" + encodeURI(nombre) +"&p="+pag,
         dataType: 'json',
         success: function (data) {
+			console.log(data);
             $('#listado').empty();
             if (data.r != 0) {
                 $("#listado").append("<h5>No playlist</h5>");
@@ -181,17 +216,29 @@ function buscar_playlist(nombre, pag) {
                 if (data.info.length < 1) {
                     $("#listado").append("<h5>No playlist</h5>");
                 } else {
-                    $("#listado").append("<h5>Playlist: " + nombre + "</h5>");                    
-                    for (var i = 0; i < data.info.length; i++) {						
-                        var t = $('<button class="playlist" data-list= "' + i + '" data-src="'+ data.info[i].id +'" ' + 
-							'data-nombre="' + data.info[i].title + '" data-numero_canciones="' + data.info[i].plsongs + 							
-							'" data-duracion="' + data.info[i].songtime + '">' +
-							data.info[i].title + "&nbsp/&nbsp" + data.info[i].plsongs + '&nbsp/&nbsp' + 
-							data.info[i].songtime + '</button>');
-                        $("#listado").append(t);
+                    lista = [];
+					var incluir = '<table class="pure-table pure-table-horizontal">'+
+							'<thead><tr><th>Title</th><th>Songs</th><th>Time</th></tr></thead><tbody>';
+                    for (var i = 0; i < data.info.length; i++) {
+                        lista.push(data.info[i].id);	
+                        if ( i % 2 == 0  ) {
+							incluir += "<tr class='playlist' data-list='" + i + "' data-src='"+ 
+							data.info[i].id + "' data-nombre='" + data.info[i].title + "' data-numero_canciones='" + data.info[i].plsongs + 							
+							"' data-duracion='" + data.info[i].songtime + "'>" + 
+								"<td>"+data.info[i].title + "</td><td>" + data.info[i].plsongs + "</td><td class='right'>" + 
+								data.info[i].songtime + "</td></tr>";
+						} else {
+							incluir += "<tr class='playlist pure-table-odd' data-list='" + i + "' data-src='"+ 
+								data.info[i].id + "' data-nombre='" + data.info[i].title + "' data-numero_canciones='" + data.info[i].plsongs + 							
+							"' data-duracion='" + data.info[i].songtime + "'>" + 
+								"<td>"+data.info[i].title + "</td><td>" + data.info[i].plsongs + "</td><td class='right'>" + 
+								data.info[i].songtime + "</td></tr>";
+						}
                     }
+                    incluir += "</tbody></table>";
+                    $("#listado").append(incluir);
                     if (pagina == 0) {
-						if (data.mas != undefined) {
+						if (data.mas != undefined) { 
 							$("#listado").append("<br/><button id='pagina_menos' class='disabled' disabled>&larr;</button>");
 							$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
 							$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
@@ -210,66 +257,61 @@ function buscar_playlist(nombre, pag) {
             }
         },
         beforeSend: function () {
+			$("#listado").append("<h5>Serach playlist: " + nombre + "</h5>");
             $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');
         },
-        error: function (jqXHR, textStatus, ex) {
-            $("#listado").append("<h5>No se ha podido buscar</h5>");
+        error: function (jqXHR, textStatus, ex) {			
+			$("#listado").empty();
+            $("#listado").append("<h5>No playlist</h5>");
         }
     });
 }
 
-
-
-
 function listar(radio, nombre, numero_canciones, duracion) {
 	desactivar_eventos();
+    reproducir_mas_canciones = false;
+    reproducir_menos_canciones = false;
+    reproduce_radio = false;
     console.log("lista canciones");
     $("#listado").empty();
     $("#listado").append("<h5>Loading: " + nombre + "&nbsp" + numero_canciones + "&nbsp" + duracion + "</h5>");
-    //$("#listado").append("<h5>"+ nombre + "</h5>");
-
     var contentType = "application/x-www-form-urlencoded; charset=utf-8";
     $.ajax({
         type: 'GET',        
-        //url: "http://localhost/radio/index.php?type=list&url=" + encodeURI(radio),
-        url: "http://salvacam.x10.mx/radio/index.php?type=list&url=" + encodeURI(radio),
+        url: "http://localhost/radio/index.php?type=list&url=" + encodeURI(radio),
+        //url: "http://salvacam.x10.mx/radio/index.php?type=list&url=" + encodeURI(radio),
         dataType: 'json',
         success: function (data) {
             console.log(data);
-            $("#listado").empty(); //mejorar la eliminacion
-            
+            $("#listado").empty();            
             $("#listado").append("<button id='volver'>&crarr; Back</button>");
-            /*
-            {"id":"afbf45e","title":"Jimmy Jazz","artist":"kortatu","mp3path":"http:\/\/www.goear.com\/plimiter.php?f=afbf45e","imgpath":"http:\/\/www.goear.com\/band\/soundpicture\/afbf45e","songtime":"2:07"}
-            */
             if (data.r != 0) {
                 $("#listado").append("<h5>No songs</h5>");
             } else {
                 if (data.info.length < 1) {
                     $("#listado").append("<h5>No songs</h5>");
                 } else {
-                    //$("#listado").append("<h5>Songs</h5>");
-                    
-					$("#listado").append("<h5>Playlist: " + nombre + "&nbsp" + numero_canciones + "&nbsp" + duracion + "</h5>");
-                    lista = [];
+                    lista = [];  
+                    var incluir = '<table class="pure-table pure-table-horizontal">'+
+							'<thead><tr><th>Artist</th><th>Title</th></tr></thead><tbody>';
                     for (var i = 0; i < data.info.length; i++) {
-                        console.log(data.info[i]);
-                        lista.push(data.info[i].id);
-                        $("#listado").append("<a class='lista' data-list='" + i + "' data-src='"+ data.info[i].id +"'>" +/* onclick='escuchar(data.info[i].id)'>" + */
-                            /* data.info[i].id + */
-                            data.info[i].title + "&nbsp/&nbsp" +
-                            data.info[i].artist + "&nbsp/&nbsp" + data.info[i].songtime +
-                            "</a>");
-                        $("#listado").append("<br/>");
+						lista.push(data.info[i].id);
+                        if ( i % 2 == 0  ) {
+							incluir += "<tr class='lista' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id + "'>"+
+							"<td>"+data.info[i].artist+"</td><td>"+data.info[i].title+"</td></tr>";
+						} else {
+							incluir += "<tr class='lista pure-table-odd' data-list='" + i + "' data-src='"+ data.info[i].id + "'>"+
+							"<td>"+data.info[i].artist+"</td><td>"+data.info[i].title+"</td></tr>";
+						}
                     }
+                    incluir += "</tbody></table>";
+                    $("#listado").append(incluir);
                     //cargar los eventos                    
                     eventos_canciones();
                     escuchar(lista[0],0);
                     $("#volver").off();
                     $("#volver").on( "click", function(){
-						console.log(playlist);
-						console.log(pagina);
-						buscar_playlist(playlist, pagina);
+						buscar_playlist(nombre_busqueda, pagina);
 					});
                 }
 
@@ -279,21 +321,64 @@ function listar(radio, nombre, numero_canciones, duracion) {
             $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');
         },
         error: function (jqXHR, textStatus, ex) {
-            $("#listado").append("<h5>No se ha podido buscar</h5>");
+            $("#listado").append("<h5>No list</h5>");
         }
     });
 }
-//lista = ["agua.mp3", "final.mp3", "hundido.mp3", "tocado.mp3"];
-//escuchar(0);
+
+function buscar_radio(nombre, pagina) {	
+	nombre_busqueda = nombre;
+	desactivar_eventos();  	
+    reproducir_mas_canciones = false;
+    reproducir_menos_canciones = false; 
+    reproduce_radio = true;     
+    $("#listado").empty();
+    $("#listado").append("<h5>Serach songs: " + nombre + "</h5>");
+
+    var contentType = "application/x-www-form-urlencoded; charset=utf-8";
+    $.ajax({
+        type: 'GET',
+        url: "http://salvacam.x10.mx/radio/index.php?type=radio&url=" + encodeURI(nombre) +"&p="+pagina,
+        //url: "http://localhost/radio/index.php?type=radio&url=" + encodeURI(nombre) +"&p="+pagina,
+        dataType: 'json',
+        success: function (data) {
+            $("#listado").empty();
+            lista = [];
+            var incluir =  '<table class="pure-table pure-table-horizontal">'+
+							'<thead><tr><th>Artist</th><th>Title</th></tr></thead><tbody>';
+            for (var i = 0; i < data.length; i++) {
+				lista.push(data[i][9]);
+				if ( i % 2 == 0  ) {
+					incluir += "<tr class='lista' id='"+data[i][9]+"' data-list='" + i + "' data-src='"+ data[i][9] + "'>"+
+						"<td>"+data[i].artist+"</td><td>"+data[i].title+"</td></tr>";
+				} else {
+					incluir += "<tr class='lista pure-table-odd' id='"+data[i][9]+"' data-list='" + i + "' data-src='"+ data[i][9] + "'>"+
+						"<td>"+data[i].artist+"</td><td>"+data[i].title+"</td></tr>";
+				}
+			}
+			incluir += "</tbody></table>";
+            $("#listado").append(incluir);
+            
+            escuchar(lista[0], 0);
+            //$("#listado").append("<span>"+lista[0][1] +"&nbsp;"+ lista[0][2]+"</span>");
+            //cargar los eventos
+            eventos_canciones();           
+        },
+        beforeSend: function () {
+            $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');
+        },
+        error: function (jqXHR, textStatus, ex) {
+            $("#listado").empty();
+            $("#listado").append("<h5>No radio</h5>");
+        }
+    });
+}
 
 function escuchar(id, pos) {
 	desactivar_eventos();
     var audio = document.getElementById('audio');
-    //console.log("reproduce cancion");
     $("#audioDiv").css("display", "block");
     $("#audio").attr("src", "http://www.goear.com/action/sound/get/" + encodeURI(id));
-    //console.log(lista[id]);
-    //$("#audio").attr("src", lista[id]);
     $("#audio").attr("autoplay", "");
 
     audio.oncanplay = function () {
@@ -301,20 +386,25 @@ function escuchar(id, pos) {
         $("#time").html(tiempoToSeg(audio.currentTime));
         $("#duration").html(tiempoToSeg(audio.duration));
     }
-    $("#audio").on('playing', function () {
-        //console.log("playing");
-        setInterval(function () {
-            $("#time").html(tiempoToSeg(audio.currentTime));
-            $("#slider").attr("value", porcentaje(audio.currentTime, audio.duration));
-            //porcentaje(audio.currentTime, audio.duration);
-        }, 500);
+    audio.onerror = function() {
+		console.log("oh no error");
+		if (pos < lista.length - 1) {
+            pos++;            
+			escuchar(lista[pos], pos);
+        } else {
+            if ( reproducir_mas_canciones ) {
+				pagina++;
+                buscar_canciones(nombre_busqueda, pagina, false);
+                //pos = 0;
+            } else {
+                pos = 0;
+				escuchar(lista[pos], pos);	
+            }
+        }
+	};
 
-        //console.log(audio.readyState);
-        pause = 0;
-        $('#play').html("||");
-        //audio.currentTime= 120;
-    });
-        $(".lista").each(function () {
+    
+    $(".lista").each(function () {
         $(this).removeClass("activo");
         if ($(this).data("list") == pos) {
             console.log($(this).data("list"));
@@ -328,16 +418,22 @@ function escuchar(id, pos) {
         console.log(lista.length - 1);
         if (pos < lista.length - 1) {
             pos++;
-        } else {
-            //if ( autoloop )
-            pos = 0;
+        } else {                     
+            if ( reproducir_mas_canciones ) {
+				pagina++;
+                buscar_canciones(nombre_busqueda, pagina, false);
+            }  else if ( reproduce_radio ) {				
+				pagina++;
+                buscar_radio(nombre_busqueda, pagina);
+            } else {
+                pos = 0;
+            }
         }
-        //console.log(pos);
-        //escuchar(pos);
+        window.location.hash = '#'+lista[pos];
         escuchar(lista[pos], pos);
     });
     $("#play").on("click", function () {
-		console.log("play/pause");
+		console.log("Play/Pause");
 		if (pause == 0) {
 			console.log("pause");
 			$('#play').html("&gt;");
@@ -352,22 +448,47 @@ function escuchar(id, pos) {
 	});
     $("#atras").on("click", function () {
         if (pos > 0) {
-            pos--;
+            pos--;            
+			window.location.hash = '#'+lista[pos];
+			escuchar(lista[pos], pos);
         } else {
-            pos = lista.length - 1;
+            if ( reproducir_menos_canciones ) {
+				pagina--;
+                buscar_canciones(nombre_busqueda, pagina, true);
+            } else {
+                pos = lista.length - 1;                
+				window.location.hash = '#'+lista[pos];
+				escuchar(lista[pos], pos);
+            }            
         }
-        //escuchar(pos);
-        escuchar(lista[pos], pos);
     });
     $("#adelante").on("click", function () {
         if (pos < lista.length - 1) {
-            pos++;
+            pos++;            
+			window.location.hash = '#'+lista[pos];
+			escuchar(lista[pos], pos);
         } else {
-            pos = 0;
+            if ( reproducir_mas_canciones ) {
+				pagina++;
+                buscar_canciones(nombre_busqueda, pagina, false);
+            }  else if ( reproduce_radio ) {				
+				pagina++;
+                buscar_radio(nombre_busqueda, pagina);
+            } else {
+                pos = 0;
+				window.location.hash = '#'+lista[pos];
+				escuchar(lista[pos], pos);	
+            }
         }
-        //escuchar(pos);
-        escuchar(lista[pos], pos);
-    })
+    });
+    $("#audio").on('playing', function () {
+        setInterval(function () {
+            $("#time").html(tiempoToSeg(audio.currentTime));
+            $("#slider").attr("value", porcentaje(audio.currentTime, audio.duration));
+        }, 500);
+        pause = 0;
+        $('#play').html("||");
+    });	
 }
 
 
