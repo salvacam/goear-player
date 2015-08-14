@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Goear Player</title>
+
+		<script src="js/zepto.min.js"></script>
+		<meta name="viewport" content="width=device-width">
+
+		
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+		<link rel="stylesheet" href="css/style.css">
+		
+	</head>
+
+	<body>
+		<div id="encabezado">
+			<div id="primera_encabezado">
+				<!--<img id="logo" src="img/logox1.png" alt="logo"/>-->
+				<label for="nombre"><h2>Goear Player</h2></label>
+			</div>	
+			<div id="segunda_encabezado">
+				<input type="text" name="nombre" id="nombre" value="" placeholder="Nombre Radio" />
+			</div>
+			<div id="tercera_encabezado">
+				<input type="button" value="Songs" id="buscar_canciones" />
+				<input type="button" value="Playlist" id="buscar_playlist" />
+			</div>
+		</div>
+		<div id="content">
+			<div id="listado">	
+				<!--
+				<a class='lista' data-list='0' onclick='escuchar(0)'>agua</a>
+				<a class='lista' data-list='1' onclick='escuchar(0)'>final</a>
+				<a class='lista' data-list='2' onclick='escuchar(0)'>hundido</a>
+				<a class='lista' data-list='3' onclick='escuchar(0)'>tocado</a>
+				-->
+			</div>
+		</div>
+		<div id="audioDiv" style="display:none;" class="">
+			<span id="time">0</span>
+			&nbsp;
+			<input class="barra" id="slider" value="0" min="0" max="100" autocomplete="off" disabled type="range">
+			&nbsp;
+			<span id="duration">0</span>
+			<div id="botones">
+				<button id='atras' class='pure-button none botones'>&Lt;</button>
+				<button id='play' class='pure-button none botones'>&gt;</button>
+				<button id='adelante' class='pure-button none botones'>&Gt;</button>
+			</div>
+			<audio no-controls id="audio">
+			</audio>
+		</div>
+		<script src="js/main.js"></script>    
+	</body>
+</html>

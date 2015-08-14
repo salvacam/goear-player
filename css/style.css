@@ -1,0 +1,295 @@
+body {		
+	margin: 0 auto;
+	text-align: center;
+	min-width: 320px;
+	background-color: #EDF1E1;
+}
+
+#content {
+	margin: 0 auto;
+	margin-bottom: 100px;
+	text-align: center;
+}
+
+#encabezado {
+	margin: 0 auto;
+	padding-top: 10px;
+	width: 100%;
+	min-width: 320px;
+	height: 115px;
+	text-align: center;	
+	background-color: #B3D3D3; 
+}
+
+#encabezado #primera_encabezado, 
+/*#encabezado #primera_encabezado img, */
+#encabezado #primera_encabezado h2 { 
+	margin: 0 auto;
+	text-align: center;	
+}
+/*
+#encabezado #primera_encabezado img,
+#encabezado #primera_encabezado h2 {
+	
+	/*margin-top: 10px;*/
+	/*float: left;*/
+	/*margin-left: 20px;*/
+}
+/*
+#encabezado #primera_encabezado h4 {
+	margin-top: 10px;
+	float: left;
+}
+*/
+#encabezado #segunda_encabezado, 
+#encabezado #tercera_encabezado {
+	clear: both;
+}
+
+#encabezado #segunda_encabezado #nombre {
+	/*float: left;*/
+	/*margin-top: -55px;*/
+	/*margin-left: 110px;*/
+	width: 160px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+
+#encabezado #tercera_encabezado #buscar_canciones, 
+#encabezado #tercera_encabezado #buscar_playlist {	
+	margin-top: 5px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#encabezado #tercera_encabezado #buscar_canciones {
+	margin-right: 12px;	
+}
+#encabezado #tercera_encabezado #buscar_playlist {
+	margin-left: 12px;
+	/*float: left;
+	margin-top: -22px;
+	margin-left: 50px;	
+	*/ 
+}
+
+#encabezado #tercera_encabezado #buscar_canciones {
+	/*margin-left: 110px;	*/
+}
+
+#audioDiv {
+	position: fixed;
+	bottom: 0;
+	width:100%;
+	margin: 0 auto;
+	text-align: center;
+	min-width: 310px;
+	background-color: #595D5C;
+}
+
+#audioDiv #botones {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#audioDiv #botones .botones{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.activo {
+	background-color: #999BCC;
+}
+/* Clear Loading */
+.clear-loading {
+  text-align: center;
+  margin: 0 auto;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+			/* Loading Effect Three */
+.loading-effect-3 {
+  width: 50px;
+  height: 50px;
+}
+.loading-effect-3 div {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #777;
+  border-radius: 50%;
+}
+.loading-effect-3 div > span {
+  background: #777;
+  width: 10px;
+  height: 10px;
+  display: block;
+  border-radius: 50%;
+  position: relative;
+  top: -5px;
+  left: 50%;
+  -webikt-transform-origin: 0 30px;
+  -moz-transform-origin: 0 30px;
+  -o-transform-origin: 0 30px;
+  transform-origin: 0 30px;
+  -webkit-animation: effect-3 2s infinite linear;
+  -moz-animation: effect-3 2s infinite linear;
+  -ms-animation: effect-3 2s infinite linear;
+  -o-animation: effect-3 2s infinite linear;
+  animation: effect-3 2s infinite linear;
+}
+@-webkit-keyframes effect-3 {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes effect-3 {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/******************* SLIDER *********************/
+
+
+.barra {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	max-width: 60%;
+}
+
+.barra::-webkit-slider-thumb {    
+	-webkit-appearance: none;   
+}
+
+.barra::-ms-track {
+	width: 100%;
+	cursor: pointer;
+	background: transparent; /* Hides the slider so custom styles can be added */
+	border-color: transparent;
+	color: transparent;
+}
+
+.barra{
+	margin-top: 12px;
+	width: 830px;
+	/*background-color: #57c3ec; */
+	background-color: #777; 
+	border: 0;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	height: 10px;
+}
+
+.barra::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	height: 22px;
+	width: 22px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	border: 3px solid #2683ae;
+	background: #fff;
+	cursor: pointer;
+	margin-top: -5px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+}
+
+.barra::-moz-range-thumb {
+	-webkit-appearance: none;
+	height: 18px;
+	width: 18px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	border: 3px solid #2683ae;
+	background: #fff;
+	cursor: pointer;
+}
+
+/* All the same stuff for IE */
+.barra::-ms-thumb {
+	-webkit-appearance: none;
+	height: 25px;
+	width: 25px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	border: 3px solid #2683ae;
+	background: #fff;
+}
+
+.barra::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 10px;
+	cursor: pointer;
+	-moz-border-radius: 1.3px;
+	-webkit-border-radius: 1.3px;
+	border-radius: 1.3px;
+}
+
+
+.barra::-moz-range-track {
+	width: 100%;
+	height: 10px;
+	cursor: pointer;
+	background-color: transparent;
+	-moz-border-radius: 1.3px;
+	-webkit-border-radius: 1.3px;
+	border-radius: 1.3px;
+}
+
+.barra::-ms-track {
+	width: 100%;
+	height: 7px;
+	cursor: pointer;
+	background: transparent;
+	border-color: transparent;
+	color: transparent;
+}
+
+.barra::-ms-fill-lower {
+	background: linear-gradient(to right, #57c3ec, #57c3ec 34%, #777 34%, #777);
+	-moz-border-radius: 2.6px;
+	-webkit-border-radius: 2.6px;
+	border-radius: 2.6px;
+	position:relative;
+	behavior: url(./css/PIE.htc);
+}
+
+.barra::-ms-fill-upper {
+	background: linear-gradient(to right, #57c3ec, #57c3ec 34%, #777 34%, #777);
+	-moz-border-radius: 2.6px;
+	-webkit-border-radius: 2.6px;
+	border-radius: 2.6px;
+}
