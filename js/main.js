@@ -152,10 +152,10 @@ function buscar_canciones(nombre, pagina, vuelve_atras) {
                     for (var i = 0; i < data.info.length; i++) {
                         lista.push(data.info[i].id);
                         if ( i % 2 == 0  ) {
-							incluir += "<tr class='lista' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id +"'>" + /* "' onclick='escuchar(data.info[i][0])'>" +*/
+							incluir += "<tr class='lista' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id +"'>" +
 								"<td>"+data.info[i].artist + "</td><td>" + data.info[i].title + "</td></tr>";
 						} else {
-							incluir +="<tr class='lista pure-table-odd' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id +"'>" + /* "' onclick='escuchar(data.info[i][0])'>" +*/
+							incluir +="<tr class='lista pure-table-odd' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id +"'>" +
 								"<td>"+data.info[i].artist + "</td><td>" + data.info[i].title + "</td></tr>";
 						}
 					}
@@ -182,7 +182,7 @@ function buscar_canciones(nombre, pagina, vuelve_atras) {
 					if ( !vuelve_atras ) {
 						escuchar(lista[0],0);
                     } else {
-						escuchar(lista[0], lista.length-1);
+						escuchar(lista[lista.length-1], lista.length-1);
                     }
                     //cargar los eventos
                     eventos_canciones();           
