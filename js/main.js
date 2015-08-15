@@ -284,8 +284,8 @@ function listar(radio, nombre, numero_canciones, duracion) {
     var contentType = "application/x-www-form-urlencoded; charset=utf-8";
     $.ajax({
         type: 'GET',        
-        url: "http://localhost/radio/index.php?type=list&url=" + encodeURI(radio),
-        //url: "http://salvacam.x10.mx/radio/index.php?type=list&url=" + encodeURI(radio),
+        //url: "http://localhost/radio/index.php?type=list&url=" + encodeURI(radio),
+        url: "http://salvacam.x10.mx/radio/index.php?type=list&url=" + encodeURI(radio),
         dataType: 'json',
         success: function (data) {
             console.log(data);
@@ -306,7 +306,7 @@ function listar(radio, nombre, numero_canciones, duracion) {
 							incluir += "<tr class='lista' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id + "'>"+
 							"<td>"+data.info[i].artist+"</td><td>"+data.info[i].title+"</td></tr>";
 						} else {
-							incluir += "<tr class='lista pure-table-odd' data-list='" + i + "' data-src='"+ data.info[i].id + "'>"+
+							incluir += "<tr class='lista pure-table-odd' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id + "'>"+
 							"<td>"+data.info[i].artist+"</td><td>"+data.info[i].title+"</td></tr>";
 						}
                     }
@@ -327,6 +327,7 @@ function listar(radio, nombre, numero_canciones, duracion) {
             $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');
         },
         error: function (jqXHR, textStatus, ex) {
+			$("#listado").empty();
             $("#listado").append("<h5>No list</h5>");
         }
     });
@@ -489,7 +490,7 @@ function escuchar(id, pos) {
     });
     //$("#audio").on('playing', function () {
     $("#audio").on('play', function () {
-		console.log("play");
+		//console.log("play");
         setInterval(function () {
             $("#time").html(tiempoToSeg(audio.currentTime));
             $("#slider").attr("value", porcentaje(audio.currentTime, audio.duration));
