@@ -6,6 +6,7 @@ var reproduce_radio = false;
 var pos = 0;
 var pause = 1;
 var pagina = 0;
+var audio = document.getElementById('audio');
 
 function tiempoToSeg(tiempo) {
     var minutos = Math.floor(tiempo / 60);
@@ -73,11 +74,13 @@ function eventos_playlist(){
 }
 
 function desactivar_eventos(){
+	console.log("desactivar eventos");
     $("#audio").off();
     $("#play").off();
     $("#atras").off();
     $("#adelante").off();
-    audio.src="";
+    audio.pause();
+    pause = 1;
 	$("#slider").attr("value", porcentaje(1, 100));
 }
 
@@ -89,6 +92,7 @@ $("#buscar_canciones").on("click", function (e) {
 		$("#listado").prepend("<br/>");
     } else {
 		pagina = 0;
+		desactivar_eventos();
         buscar_canciones($("#nombre").val(), pagina);
     }
 });
@@ -101,6 +105,7 @@ $("#buscar_playlist").on("click", function (e) {
 		$("#listado").prepend("<br/>");
     } else {
 		pagina = 0;
+		desactivar_eventos();
         buscar_playlist($("#nombre").val(), pagina);
     }
 });
@@ -113,6 +118,7 @@ $("#buscar_radio").on("click", function (e) {
 		$("#listado").prepend("<br/>");
     } else {
 		pagina = 0;
+		desactivar_eventos();
         buscar_radio($("#nombre").val(), pagina);
     }
 });
@@ -481,7 +487,9 @@ function escuchar(id, pos) {
             }
         }
     });
-    $("#audio").on('playing', function () {
+    //$("#audio").on('playing', function () {
+    $("#audio").on('play', function () {
+		console.log("play");
         setInterval(function () {
             $("#time").html(tiempoToSeg(audio.currentTime));
             $("#slider").attr("value", porcentaje(audio.currentTime, audio.duration));

@@ -111,6 +111,14 @@ td.right {
 	padding-right: 10px;	
 }
 
+#pagina_mas, 
+#pagina_menos {
+	margin-top: 5px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;	
+}
+
 
 /******************* REPRODUCTOR *********************/
 #audioDiv {
