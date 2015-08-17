@@ -130,6 +130,78 @@ function buscar_canciones(nombre, pagina, vuelve_atras) {
     reproducir_menos_canciones = false;    
     reproduce_radio = false;  
     $("#listado").empty();
+    $("#listado").append("<h5>Serach songs: " + nombre + "</h5>");
+    $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');
+    
+	var xhr = new XMLHttpRequest({mozSystem: true});
+	//xhr.open("GET", "http://salvacam.x10.mx/radio/index.php?type=songs&url=" + encodeURI(nombre)+"&p="+pagina, true);
+	xhr.open("GET", "http://www.goear.com/apps/android/search_songs_json.php?q=" + encodeURI(nombre) + "&p=" + pagina, false);	
+	xhr.onreadystatechange = function() {				
+		if (xhr.readyState == 4) {
+			$("#listado").empty(); 
+			var data = JSON.parse(xhr.responseText);    
+			console.log(data);       
+			lista = [];
+			var incluir = '<table class="pure-table pure-table-horizontal">'+
+				'<thead><tr><th>Artist</th><th>Title</th></tr></thead><tbody>';
+			for (var i = 0; i < data.length; i++) {
+				lista.push(data[i].id);
+				if ( i % 2 == 0  ) {
+					incluir += "<tr class='lista' id='"+data[i].id+"' data-list='" + i + "' data-src='"+ data[i].id +"'>" +
+						"<td>"+data[i].artist + "</td><td>" + data[i].title + "</td></tr>";
+				} else {
+					incluir +="<tr class='lista pure-table-odd' id='"+data[i].id+"' data-list='" + i + "' data-src='"+ data[i].id +"'>" +
+						"<td>"+data[i].artist + "</td><td>" + data[i].title + "</td></tr>";
+				}
+			}
+			incluir += "</tbody></table>";
+			$("#listado").append(incluir);
+			var xhr1 = new XMLHttpRequest({mozSystem: true});
+			//xhr1.open("GET", "http://salvacam.x10.mx/radio/index.php?type=songs&url=" + encodeURI(nombre)+"&p="+(pagina+1), true);
+			xhr1.open("GET", "http://www.goear.com/apps/android/search_songs_json.php?q=" + encodeURI(nombre) + "&p=" + (pagina+1), false);
+			xhr1.onreadystatechange = function() {				
+				if (xhr1.readyState == 4) {				
+					var data1 = JSON.parse(xhr1.responseText);  
+					if (pagina == 0) {
+						if (data1 != 0) { 
+							reproducir_mas_canciones = true;
+							$("#listado").append("<br/><button id='pagina_menos' class='disabled' disabled>&larr;</button>");
+							$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
+							$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
+						}
+					} else {				
+						reproducir_menos_canciones = true;		
+						$("#listado").append("<br/><button id='pagina_menos' data-nombre='"+ nombre +"'>&larr;</button>");
+						$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
+						if (data1 != 0) {
+							reproducir_mas_canciones = true;
+							$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
+						} else {
+							$("#listado").append("<button id='pagina_mas' class='disabled' disabled>&rarr;</button>");
+						}
+					}   
+				}
+                //cargar los eventos 
+				eventos_canciones(); 
+			}
+			xhr1.send();
+			if ( !vuelve_atras ) {
+				escuchar(lista[0],0);
+			} else {
+				escuchar(lista[lista.length-1], lista.length-1);
+			}                    
+		}
+	}
+	xhr.send();
+}
+
+function buscar_canciones1(nombre, pagina, vuelve_atras) {	
+	nombre_busqueda = nombre;
+	desactivar_eventos();  	
+    reproducir_mas_canciones = false;
+    reproducir_menos_canciones = false;    
+    reproduce_radio = false;  
+    $("#listado").empty();
 
     var contentType = "application/x-www-form-urlencoded; charset=utf-8";
     $.ajax({
@@ -202,6 +274,79 @@ function buscar_canciones(nombre, pagina, vuelve_atras) {
 }
 
 function buscar_playlist(nombre, pag) {
+	nombre_busqueda = nombre;
+	desactivar_eventos();
+    reproducir_mas_canciones = false;
+    reproducir_menos_canciones = false;
+    reproduce_radio = false;
+    $("#listado").empty();
+    $("#listado").append("<h5>Serach playlist: " + nombre + "</h5>");
+    $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');	
+
+    var xhr = new XMLHttpRequest({mozSystem: true});
+    //xhr.open("GET", "http://salvacam.x10.mx/radio/index.php?type=playlist&url=" + encodeURI(nombre) +"&p="+pag, true);
+    xhr.open("GET", "http://www.goear.com/apps/android/search_playlist_json.php?q=" + encodeURI(nombre) +"&p="+pag, false);
+	xhr.onreadystatechange = function() {				
+		if (xhr.readyState == 4) {
+			$("#listado").empty(); 
+			var data = JSON.parse(xhr.responseText);   
+			console.log(data);  
+			if ( data != 0 ) {
+				lista = [];
+				var incluir = '<table class="pure-table pure-table-horizontal">'+
+					'<thead><tr><th>Title</th><th>Songs</th><th>Time</th></tr></thead><tbody>';
+				for (var i = 0; i < data.length; i++) {
+					lista.push(data[i].id);	
+					if ( i % 2 == 0  ) {
+						incluir += "<tr class='playlist' data-list='" + i + "' data-src='"+ 
+							data[i].id + "' data-nombre='" + data[i].title + "' data-numero_canciones='" + data[i].plsongs +
+							"' data-duracion='" + data[i].songtime + "'>" + 
+							"<td>"+data[i].title + "</td><td>" + data[i].plsongs + "</td><td class='right'>" +
+							data[i].songtime + "</td></tr>";
+					} else {
+						incluir += "<tr class='playlist pure-table-odd' data-list='" + i + "' data-src='"+ 
+							data[i].id + "' data-nombre='" + data[i].title + "' data-numero_canciones='" + data[i].plsongs +
+							"' data-duracion='" + data[i].songtime + "'>" + 
+							"<td>"+data[i].title + "</td><td>" + data[i].plsongs + "</td><td class='right'>" + 
+							data[i].songtime + "</td></tr>";
+					}
+				}
+				incluir += "</tbody></table>";			
+				$("#listado").append(incluir);
+				var xhr1 = new XMLHttpRequest({mozSystem: true});
+				//xhr1.open("GET", "http://salvacam.x10.mx/radio/index.php?type=playlist&url=" + encodeURI(nombre) +"&p="+(pag+1), false);
+				xhr1.open("GET", "http://www.goear.com/apps/android/search_playlist_json.php?q=" + encodeURI(nombre) +"&p="+(pag+1), false);
+				xhr1.onreadystatechange = function() {				
+					if (xhr1.readyState == 4) {				
+						var data1 = JSON.parse(xhr1.responseText);  
+						if (pagina == 0) {
+							if (data1 != 0) { 
+								$("#listado").append("<br/><button id='pagina_menos' class='disabled' disabled>&larr;</button>");
+								$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
+								$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
+							}
+						} else {						
+							$("#listado").append("<br/><button id='pagina_menos' data-nombre='"+ nombre +"'>&larr;</button>");
+							$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
+							if (data1 != 0) {
+								$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
+							} else {
+								$("#listado").append("<button id='pagina_mas' class='disabled' disabled>&rarr;</button>");
+							}
+						}
+						eventos_playlist();       
+					}
+				}
+				xhr1.send();
+			}
+		}
+	}
+	xhr.send();
+}
+
+
+
+function buscar_playlist1(nombre, pag) {
 	nombre_busqueda = nombre;
 	desactivar_eventos();
     reproducir_mas_canciones = false;
@@ -281,33 +426,91 @@ function listar(radio, nombre, numero_canciones, duracion) {
     console.log("lista canciones");
     $("#listado").empty();
     $("#listado").append("<h5>Loading: " + nombre + "&nbsp" + numero_canciones + "&nbsp" + duracion + "</h5>");
+    $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');
+				
+	var xhr = new XMLHttpRequest({mozSystem: true});
+	xhr.open("GET", "http://www.goear.com/apps/android/playlist_songs_json.php?v=" + encodeURI(radio), false);
+	//si se usa en navegador usar esta url 
+	//xhr.open("GET", "http://salvacam.x10.mx/radio/index.php?type=list&url=" + encodeURI(radio), true);
+	xhr.onreadystatechange = function() {				
+		if (xhr.readyState == 4) {
+			$("#listado").empty(); 
+			var tmpkk = xhr.responseText;
+			var data = JSON.parse(xhr.responseText);           
+			$("#listado").append("<button id='volver'>&crarr; Back</button>");
+			lista = [];  
+			var incluir = '<table class="pure-table pure-table-horizontal">'+
+				'<thead><tr><th>Artist</th><th>Title</th></tr></thead><tbody>';
+			for (var i = 0; i < data.length; i++) {
+				lista.push(data[i].id);
+				if ( i % 2 == 0  ) {
+					incluir += "<tr class='lista' id='"+data[i].id+"' data-list='" + i + "' data-src='"+ data[i].id + "'>"+
+						"<td>"+data[i].artist+"</td><td>"+data[i].title+"</td></tr>";	
+				} else {
+					incluir += "<tr class='lista pure-table-odd' id='"+data[i].id+"' data-list='" + i + "' data-src='"+ data[i].id + "'>"+
+						"<td>"+data[i].artist+"</td><td>"+data[i].title+"</td></tr>";
+				}
+			}
+			incluir += "</tbody></table>";
+			$("#listado").append(incluir);
+			//cargar los eventos                    
+			eventos_canciones();
+			escuchar(lista[0],0);
+			$("#volver").off();
+			$("#volver").on( "click", function(){
+				buscar_playlist(nombre_busqueda, pagina);
+			});
+		}
+	}
+	xhr.send();
+}
+
+function listar1(radio, nombre, numero_canciones, duracion) {
+	desactivar_eventos();
+    reproducir_mas_canciones = false;
+    reproducir_menos_canciones = false;
+    reproduce_radio = false;
+    console.log("lista canciones");
+    $("#listado").empty();
+    $("#listado").append("<h5>Loading: " + nombre + "&nbsp" + numero_canciones + "&nbsp" + duracion + "</h5>");
     var contentType = "application/x-www-form-urlencoded; charset=utf-8";
     $.ajax({
         type: 'GET',        
         //url: "http://localhost/radio/index.php?type=list&url=" + encodeURI(radio),
-        url: "http://salvacam.x10.mx/radio/index.php?type=list&url=" + encodeURI(radio),
-        dataType: 'json',
+        //url: "http://salvacam.x10.mx/radio/index.php?type=list&url=" + encodeURI(radio),
+        url: "http://www.goear.com/apps/android/playlist_songs_json.php?v=" + encodeURI(radio),
+        dataType: 'json',            
+        xhrFields: {
+           mozSystem: true
+        },
         success: function (data) {
             console.log(data);
             $("#listado").empty();            
             $("#listado").append("<button id='volver'>&crarr; Back</button>");
-            if (data.r != 0) {
+            /*if (data.r != 0) {
                 $("#listado").append("<h5>No songs</h5>");
             } else {
                 if (data.info.length < 1) {
                     $("#listado").append("<h5>No songs</h5>");
                 } else {
+                */
                     lista = [];  
                     var incluir = '<table class="pure-table pure-table-horizontal">'+
 							'<thead><tr><th>Artist</th><th>Title</th></tr></thead><tbody>';
-                    for (var i = 0; i < data.info.length; i++) {
-						lista.push(data.info[i].id);
+                    //for (var i = 0; i < data.info.length; i++) {
+                    for (var i = 0; i < data.length; i++) {
+						//lista.push(data.info[i].id);
+						lista.push(data[i].id);
                         if ( i % 2 == 0  ) {
-							incluir += "<tr class='lista' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id + "'>"+
-							"<td>"+data.info[i].artist+"</td><td>"+data.info[i].title+"</td></tr>";
+							incluir += "<tr class='lista' id='"+data[i].id+"' data-list='" + i + "' data-src='"+ data[i].id + "'>"+
+							"<td>"+data[i].artist+"</td><td>"+data[i].title+"</td></tr>";
+							//incluir += "<tr class='lista' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id + "'>"+
+							//"<td>"+data.info[i].artist+"</td><td>"+data.info[i].title+"</td></tr>";
 						} else {
-							incluir += "<tr class='lista pure-table-odd' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id + "'>"+
-							"<td>"+data.info[i].artist+"</td><td>"+data.info[i].title+"</td></tr>";
+							incluir += "<tr class='lista pure-table-odd' id='"+data[i].id+"' data-list='" + i + "' data-src='"+ data[i].id + "'>"+
+							"<td>"+data[i].artist+"</td><td>"+data[i].title+"</td></tr>";
+							//incluir += "<tr class='lista pure-table-odd' id='"+data.info[i].id+"' data-list='" + i + "' data-src='"+ data.info[i].id + "'>"+
+							//"<td>"+data.info[i].artist+"</td><td>"+data.info[i].title+"</td></tr>";
 						}
                     }
                     incluir += "</tbody></table>";
@@ -319,9 +522,9 @@ function listar(radio, nombre, numero_canciones, duracion) {
                     $("#volver").on( "click", function(){
 						buscar_playlist(nombre_busqueda, pagina);
 					});
-                }
+               // }
 
-            }
+            //}
         },
         beforeSend: function () {
             $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');
@@ -334,6 +537,60 @@ function listar(radio, nombre, numero_canciones, duracion) {
 }
 
 function buscar_radio(nombre, pagina) {	
+	nombre_busqueda = nombre;
+	desactivar_eventos();  	
+    reproducir_mas_canciones = false;
+    reproducir_menos_canciones = false; 
+    reproduce_radio = true;     
+    $("#listado").empty();
+    $("#listado").append("<h5>Serach songs: " + nombre + "</h5>");
+    $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');
+
+	var xhr = new XMLHttpRequest({mozSystem: true});
+	xhr.open("POST", "http://www.goear.com/action/bands/getrelatedband", false);	
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	
+	xhr.onreadystatechange = function() {				
+		if (xhr.readyState == 4) { 			
+			var xhr1 = new XMLHttpRequest({mozSystem: true});
+			xhr1.open("POST", "http://www.goear.com/action/bands/getrelatedbandsounds", false);	
+			xhr1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			
+			xhr1.onreadystatechange = function() {				
+				if (xhr1.readyState == 4) { 
+					$("#listado").empty(); 
+					var data = JSON.parse(xhr1.responseText); 					
+					lista = [];
+					var incluir =  '<table class="pure-table pure-table-horizontal">'+
+						'<thead><tr><th>Artist</th><th>Title</th></tr></thead><tbody>';
+					for (var i = 0; i < data.length; i++) {
+						lista.push(data[i][9]);
+						if ( i % 2 == 0  ) {
+							incluir += "<tr class='lista' id='"+data[i][9]+"' data-list='" + i + "' data-src='"+ data[i][9] + "'>"+
+								"<td>"+data[i].artist+"</td><td>"+data[i].title+"</td></tr>";
+						} else {
+							incluir += "<tr class='lista pure-table-odd' id='"+data[i][9]+"' data-list='" + i + "' data-src='"+ data[i][9] + "'>"+
+								"<td>"+data[i].artist+"</td><td>"+data[i].title+"</td></tr>";
+						}
+					}
+					incluir += "</tbody></table>";
+					$("#listado").append(incluir);
+            
+					escuchar(lista[0], 0);
+					eventos_canciones();    
+				}
+			}
+			var post =
+				"band=" + encodeURIComponent(unescape(xhr.responseText)) +
+				"&p=" + encodeURIComponent(unescape(pagina));
+			xhr1.send(post);
+		}
+	}
+	xhr.send("band="+nombre);
+}
+
+//usar esta funcion si se usa en el navegador
+function buscar_radio1(nombre, pagina) {	
 	nombre_busqueda = nombre;
 	desactivar_eventos();  	
     reproducir_mas_canciones = false;
