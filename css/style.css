@@ -31,7 +31,7 @@ body {
 	min-width: 320px;
 	height: 115px;
 	text-align: center;	
-	background-color: #595D5C; 
+	background-color: #595D5C;
 }
 
 #encabezado #primera_encabezado, 
@@ -69,6 +69,7 @@ body {
 	margin-right: 6px;	
 	margin-left: 6px;	
 }
+	
 /*
 #encabezado #tercera_encabezado #buscar_playlist {
 	margin-left: 6px;
@@ -119,6 +120,9 @@ td.right {
 	padding-right: 10px;	
 }
 
+.activo {
+	background-color: #999BCC;
+}
 
 /******************* REPRODUCTOR *********************/
 #audioDiv {
@@ -141,9 +145,6 @@ td.right {
 	margin-right: 10px;
 }
 
-.activo {
-	background-color: #999BCC;
-}
 
 /******************* BUSQUEDA *********************/
 /* Clear Loading */

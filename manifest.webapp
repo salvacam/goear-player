@@ -1,5 +1,5 @@
 {
-	"version": "1.0.1",
+	"version": "1.0.3",
     "name":"Goear Player",
     "description":"Reproductor de goear",
     "launch_path" : "/index.html",
@@ -19,6 +19,6 @@
     },
 	"developer": {
         "name":"Salvador Camacho Soto",
-        "url":"http://salvacam.tk"
+        "url":"http://salvacam.x10.mx"
     }
 }
