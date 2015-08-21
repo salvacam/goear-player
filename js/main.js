@@ -135,8 +135,8 @@ function buscar_canciones(nombre, pagina, vuelve_atras) {
     
 	var xhr = new XMLHttpRequest({mozSystem: true});
 	//si se usa en navegador usar esta url 
-	xhr.open("GET", "http://salvacam.x10.mx/radio/index.php?type=songs&url=" + encodeURI(nombre)+"&p="+pagina, true);
-	//xhr.open("GET", "http://www.goear.com/apps/android/search_songs_json.php?q=" + encodeURI(nombre) + "&p=" + pagina, false);	
+	//xhr.open("GET", "http://salvacam.x10.mx/radio/index.php?type=songs&url=" + encodeURI(nombre)+"&p="+pagina, true);
+	xhr.open("GET", "http://www.goear.com/apps/android/search_songs_json.php?q=" + encodeURI(nombre) + "&p=" + pagina, false);	
 	xhr.onreadystatechange = function() {				
 		if (xhr.readyState == 4) {
 			$("#listado").empty(); 
