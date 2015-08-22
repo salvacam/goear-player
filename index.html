@@ -3,7 +3,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Goear Player</title>
-
+		
+		<!-- phonegap
+		<script src="cordova.js"></script>	-->	
 		<script src="js/zepto.min.js"></script>
 		<meta name="viewport" content="width=device-width">
 
@@ -17,7 +19,7 @@
 				<label for="nombre"><h2>Goear Player</h2></label>
 			</div>	
 			<div id="segunda_encabezado">
-				<input type="text" name="nombre" id="nombre" value="" placeholder="Search Area" />
+				<input type="text" name="nombre" id="nombre" value="" placeholder="Search Name" />
 			</div>
 			<div id="tercera_encabezado">
 				<input type="button" value="Songs" id="buscar_canciones" />
@@ -27,20 +29,24 @@
 		</div>
 		<div id="content">
 			<div id="listado">	
-			</div>
-		</div>
+			</div>			
+			<div id="cargando" style="display:none;" ><img src="img/loader.gif"/></div>
+		</div>		
 		<div id="audioDiv" style="display:none;" class="">
-			<span id="time">0</span>
-			&nbsp;
-			<input type="range" class="barra" id="slider" value="0" min="0" max="100" disabled >
-			&nbsp;
-			<span id="duration">0</span>
+			<div id="linea-tiempo">
+				<span id="time">0:00</span>
+				<div id="slider">
+					<div id="paso">
+					</div>
+				</div>
+				<span id="duration">0:00</span>
+			</div>
 			<div id="botones">
 				<button id='atras' class='pure-button none botones'>&Lt;</button>
 				<button id='play' class='pure-button none botones'>&gt;</button>
 				<button id='adelante' class='pure-button none botones'>&Gt;</button>
 			</div>
-			<audio no-controls id="audio">
+			<audio no-controls autoplay id="audio">
 			</audio>
 		</div>
 		<script src="js/main.js"></script>    
