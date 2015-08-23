@@ -353,7 +353,7 @@ function listar(radio, nombre, numero_canciones, duracion) {
 			$("#cargando").css("display","none");			
 			var data = JSON.parse(xhr.responseText);           
 			if ( data != 0 ) {
-				$("#listado").append("<button id='volver'>&crarr; Back</button>");
+				$("#listado").append("<button class='topcoat-notification' id='volver'>&crarr; Back</button>");
 				lista = [];  
 				var incluir = '<table class="pure-table pure-table-horizontal">'+
 					'<thead><tr><th>Artist</th><th>Title</th></tr></thead><tbody>';

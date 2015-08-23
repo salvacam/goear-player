@@ -136,6 +136,7 @@ td.right {
 #volver {	
 	margin-top: 5px;
 	height: 35px;
+	line-height: 35px;
 	padding-left: 10px;
 	padding-right: 10px;	
 }
