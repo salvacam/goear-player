@@ -213,19 +213,19 @@ function buscar_canciones(nombre, pagina, vuelve_atras) {
 						if (pagina == 0) {
 							if (data1 != 0) { 
 								reproducir_mas_canciones = true;
-								$("#listado").append("<br/><button id='pagina_menos' class='disabled' disabled>&larr;</button>");
-								$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
-								$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
+								$("#listado").append("<br/><button id='pagina_menos' class='topcoat-button disabled' disabled>&larr;</button>");
+								$("#listado").append("&nbsp;<span class='topcoat-notification' disabled> " + ( pagina +1 ) +" </span>&nbsp;");
+								$("#listado").append("<button id='pagina_mas' class='topcoat-button' data-nombre='"+ nombre +"'>&rarr;</button>");
 							}
 						} else {				
 							reproducir_menos_canciones = true;		
-							$("#listado").append("<br/><button id='pagina_menos' data-nombre='"+ nombre +"'>&larr;</button>");
-							$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
+							$("#listado").append("<br/><button id='pagina_menos' class='topcoat-button' data-nombre='"+ nombre +"'>&larr;</button>");
+							$("#listado").append("&nbsp;<span class='topcoat-notification' disabled> " + ( pagina +1 ) +" </span>&nbsp;");
 							if (data1 != 0) {
 								reproducir_mas_canciones = true;
-								$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
+								$("#listado").append("<button id='pagina_mas' class='topcoat-button' data-nombre='"+ nombre +"'>&rarr;</button>");
 							} else {
-								$("#listado").append("<button id='pagina_mas' class='disabled' disabled>&rarr;</button>");
+								$("#listado").append("<button id='pagina_mas' class='topcoat-button disabled' disabled>&rarr;</button>");
 							}
 						}   
 					}					
@@ -304,17 +304,17 @@ function buscar_playlist(nombre, pag) {
 						var data1 = JSON.parse(xhr1.responseText);  
 						if (pagina == 0) {
 							if (data1 != 0) { 
-								$("#listado").append("<br/><button id='pagina_menos' class='disabled' disabled>&larr;</button>");
-								$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
-								$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
+								$("#listado").append("<br/><button id='pagina_menos' class='topcoat-button disabled' disabled>&larr;</button>");
+								$("#listado").append("&nbsp;<span class='topcoat-notification'> " + ( pagina +1 ) +" </span>&nbsp;");
+								$("#listado").append("<button id='pagina_mas' class='topcoat-button' data-nombre='"+ nombre +"'>&rarr;</button>");
 							}
 						} else {						
-							$("#listado").append("<br/><button id='pagina_menos' data-nombre='"+ nombre +"'>&larr;</button>");
-							$("#listado").append("&nbsp;<span> " + ( pagina +1 ) +" </span>&nbsp;");
+							$("#listado").append("<br/><button id='pagina_menos' class='topcoat-button' data-nombre='"+ nombre +"'>&larr;</button>");
+							$("#listado").append("&nbsp;<span class='topcoat-notification'> " + ( pagina +1 ) +" </span>&nbsp;");
 							if (data1 != 0) {
-								$("#listado").append("<button id='pagina_mas' data-nombre='"+ nombre +"'>&rarr;</button>");
+								$("#listado").append("<button id='pagina_mas' class='topcoat-button' data-nombre='"+ nombre +"'>&rarr;</button>");
 							} else {
-								$("#listado").append("<button id='pagina_mas' class='disabled' disabled>&rarr;</button>");
+								$("#listado").append("<button id='pagina_mas' class='topcoat-button disabled' disabled>&rarr;</button>");
 							}
 						}
 						eventos_playlist();       
@@ -544,7 +544,10 @@ function escuchar(id, pos) {
     });	
 }
 
+function actualizar_notificacion(texto) {}
+
 //NOTIFICACION PHONEGAP
+/*
 document.addEventListener('deviceready', function () {    
 	cordova.plugins.notification.local.schedule({
 		id: 1,
@@ -623,3 +626,4 @@ window.addEventListener('unload', function () {
 });
 
 
+*/
