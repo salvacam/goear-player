@@ -1,0 +1,45 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"firefoxos-package\" value=\"Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"firefoxos-package\" value=\"Notification\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "android.support.v4": {
+            "PACKAGE_NAME": "mx.x10.salvacam.goear"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "mx.x10.salvacam.goear"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "mx.x10.salvacam.goear"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "mx.x10.salvacam.goear"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "mx.x10.salvacam.goear"
+        },
+        "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "mx.x10.salvacam.goear"
+        }
+    },
+    "dependent_plugins": {}
+}

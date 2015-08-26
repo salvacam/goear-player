@@ -1,0 +1,316 @@
+.button,
+.topcoat-button,
+.topcoat-button--quiet,
+.topcoat-button--large,
+.topcoat-button--large--quiet,
+.topcoat-button--cta,
+.topcoat-button--large--cta,
+.topcoat-button-bar__button,
+.topcoat-button-bar__button--large {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-clip: padding-box;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-decoration: none
+}
+
+.button--disabled,
+.topcoat-button:disabled,
+.topcoat-button--quiet:disabled,
+.topcoat-button--large:disabled,
+.topcoat-button--large--quiet:disabled,
+.topcoat-button--cta:disabled,
+.topcoat-button--large--cta:disabled,
+.topcoat-button-bar__button:disabled,
+.topcoat-button-bar__button--large:disabled {
+    opacity: .3;
+    cursor: default;
+    pointer-events: none
+}
+
+.topcoat-button,
+.topcoat-button--quiet,
+.topcoat-button--large,
+.topcoat-button--large--quiet,
+.topcoat-button--cta,
+.topcoat-button--large--cta,
+.topcoat-button-bar__button,
+.topcoat-button-bar__button--large {
+    padding: 0 1.25rem;
+    font-size: 16px;
+    line-height: 3rem;
+    letter-spacing: 1px;
+    color: #c6c8c8;
+    text-shadow: 0 -1px rgba(0, 0, 0, .69);
+    vertical-align: top;
+    background-color: #595b5b;
+    box-shadow: inset 0 1px #737373;
+    border: 1px solid #333434;
+    border-radius: 6px
+}
+
+.topcoat-button--large,
+.topcoat-button--large--quiet {
+    font-size: 1.3rem;
+    font-weight: 400;
+    line-height: 4.375rem;
+    padding: 0 1.25rem
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font: 16px "Source Sans", helvetica, arial, sans-serif;
+    font-weight: 400
+}
+
+:focus {
+    outline-color: transparent;
+    outline-style: none
+}
+
+body {
+    margin: 0 auto;
+    text-align: center;
+    min-width: 320px;
+    background-color: #EDF1E1;
+}
+
+#content {
+    margin: 0 auto;
+    margin-bottom: 100px;
+    text-align: center;
+}
+
+
+/******************* ENCABEZADO *********************/
+
+.topcoat-button--large,
+.topcoat-button--large--quiet {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.688rem;
+    padding: 0 0.875rem;
+}
+
+#encabezado {
+    margin: 0 auto;
+    padding-top: 10px;
+    width: 100%;
+    min-width: 320px;
+    height: 115px;
+    text-align: center;
+    background-color: #8B9290;
+}
+
+#encabezado #primera_encabezado {
+    margin: 0 auto;
+    text-align: center;
+    color: #575757;
+    font-size: 1.15em;
+}
+
+#encabezado #segunda_encabezado,
+#encabezado #tercera_encabezado {
+    clear: both;
+}
+
+#encabezado #segunda_encabezado #nombre {
+    line-height: 35px;
+    -webkit-appearance: none;
+}
+
+.text-input {
+    line-height: 35px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    padding: 0 1.25rem;
+    border: 1px solid #333434;
+    border-radius: 6px;
+    background-color: #454646;
+    box-shadow: inset 0 1px rgba(0, 0, 0, 0.05);
+    color: #c6c8c8;
+    vertical-align: top;
+}
+
+.text-input:focus {
+    background-color: #595b5b;
+    color: #fff;
+    border: 1px solid #0036ff;
+    box-shadow: 0 0 0 2px #6fb5f1;
+}
+
+.text-input:disabled::-webkit-input-placeholder {
+    color: #fff;
+}
+
+.text-input:disabled::-moz-placeholder {
+    color: #fff;
+}
+
+.text-input:disabled:-ms-input-placeholder {
+    color: #fff;
+}
+
+.text-input:invalid {
+    border: 1px solid #ec514e;
+}
+
+#encabezado #tercera_encabezado #buscar_canciones,
+#encabezado #tercera_encabezado #buscar_playlist,
+#encabezado #tercera_encabezado #buscar_radio {
+    margin-top: 5px;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#encabezado #tercera_encabezado #buscar_canciones,
+#encabezado #tercera_encabezado #buscar_playlist,
+#encabezado #tercera_encabezado #buscar_radio {
+    margin-right: 6px;
+    margin-left: 6px;
+}
+
+
+/******************* LISTADO *********************/
+
+#listado {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#listado table {
+    width: 100%;
+}
+
+#listado th {
+    text-align: center;
+    background-color: #555;
+    color: #fff;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#listado .pure-table-odd {
+    background-color: #CBD7A7;
+}
+
+#listado tr,
+#listado td {
+    /*word-wrap: break-word;*/
+    padding: 0.5em 0.5em;
+}
+
+tr.activo,
+tr.activo td {
+    background-color: #999BCC;
+}
+
+.activo {
+    background-color: #999BCC;
+}
+
+td.right {
+    text-align: right;
+}
+
+#volver {
+    margin-top: 5px;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#pagina_mas,
+#pagina_menos {
+    margin-top: 5px;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 30px;
+}
+
+.topcoat-notification {
+    background-color: transparent;
+    line-height: 35px;
+    color: #000;
+}
+
+
+/******************* REPRODUCTOR *********************/
+
+#audioDiv {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    min-width: 310px;
+    background-color: #B3D3D3;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#audioDiv #linea-tiempo {
+    width: 100%;
+    display: inline-block;
+}
+
+#time {
+    display: block;
+    float: left;
+    margin-left: 10px;
+}
+
+#duration {
+    display: block;
+    float: right;
+    margin-right: 10px;
+    margin-top: -10px;
+}
+
+#slider {
+    float: none;
+    margin: 0 auto;
+    text-align: center;
+    width: 60%;
+    height: 10px;
+    background-color: #777;
+    border-radius: 5px;
+}
+
+#paso {
+    margin: 0;
+    text-align: left;
+    width: 0%;
+    height: 10px;
+    background: #57c3ec;
+    border-radius: 5px;
+}
+
+#audioDiv .botones {
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 2.25rem;
+    padding: 0 1.0rem;
+}

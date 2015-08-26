@@ -1,0 +1,14 @@
+{
+    "launch_path": "/index.html",
+    "installs_allowed_from": [
+        "*"
+    ],
+    "version": "0.0.2",
+    "name": "Goear Player",
+    "description": "Reproductor goear",
+    "developer": {
+        "name": "Salvador Camacho",
+        "url": "http://salvacam.x10.mx"
+    },
+    "icons": {}
+}
