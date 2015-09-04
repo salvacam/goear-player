@@ -1,0 +1,30 @@
+{
+	"version": "1.1",
+    "name":"Goear Player",
+    "description":"Reproductor de goear",
+    "launch_path" : "/index.html",
+    "icons":{
+		"16":  "/img/icono16.png",
+		"32":  "/img/icono32.png",
+		"48":  "/img/icono48.png",
+		"60": "/img/icono60.png",
+		"90": "/img/icono90.png",
+		"120": "/img/icono120.png",
+		"128": "/img/icono128.png",
+		"256": "/img/icono256.png"
+    },      
+	"type": "privileged",
+    "permissions": {
+        "systemXHR": { "description": "Required to make Ajax Calls over the Network" },        
+		"audio-channel-content": { "description": "Necesario para que siga reproduciendo en segundo plano" },
+		"desktop-notification":{ "description": "Needed for show the notifications" },
+		"device-storage:sdcard": {
+			"description" : "Guardar canciones en la tarjeta sd",
+			"access": "readwrite"
+		}
+    },
+	"developer": {
+        "name":"Salvador Camacho Soto",
+        "url":"https://github.com/salvacam"
+    }
+}
