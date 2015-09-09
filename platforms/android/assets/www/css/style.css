@@ -81,7 +81,7 @@ body {
     font-weight: 400
 }
 
-:focus {
+*:focus {
     outline-color: transparent;
     outline-style: none
 }
@@ -89,6 +89,8 @@ body {
 body {
     margin: 0 auto;
     text-align: center;
+    width: 100%;
+    overflow-x: hidden;
     min-width: 320px;
     background-color: #EDF1E1;
 }
@@ -98,6 +100,7 @@ body {
     margin-bottom: 100px;
     text-align: center;
 }
+
 
 
 /******************* ENCABEZADO *********************/
@@ -189,6 +192,18 @@ body {
     margin-left: 6px;
 }
 
+#salir {
+    display: block;
+    float: right;
+    margin-right: 5px;
+    padding: 1px 5px;
+    font-size: 0.75em;
+    background-color: #575757;
+    color: #C6C8C8;
+    border-radius: 6px;
+    border: 1px solid #333434;
+    margin-top: 0px;
+}
 
 /******************* LISTADO *********************/
 
@@ -286,7 +301,7 @@ td.right {
     display: block;
     float: right;
     margin-right: 10px;
-    margin-top: -10px;
+    margin-top: -13px;
 }
 
 #slider {
@@ -294,18 +309,23 @@ td.right {
     margin: 0 auto;
     text-align: center;
     width: 60%;
-    height: 10px;
+    height: 12px;
     background-color: #777;
     border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 #paso {
     margin: 0;
     text-align: left;
     width: 0%;
-    height: 10px;
+    height: 12px;
     background: #57c3ec;
     border-radius: 5px;
+}
+
+*, html {
+	-webkit-tap-highlight-color: transparent;
 }
 
 #audioDiv .botones {
@@ -313,4 +333,28 @@ td.right {
     margin-right: 10px;
     line-height: 2.25rem;
     padding: 0 1.0rem;
+}
+
+.descargar {
+    display: block;
+    padding: 1px 2px;
+    font-size: 0.75em;
+    background-color: #575757;
+    color: #C6C8C8;
+    border-radius: 6px;
+    border: 1px solid #333434;
+    font-size: 0.55em;
+}
+
+#descargar_todas {
+    float: right;
+    margin-right: 5px;
+    margin-top: -30px;
+}
+
+#descargar_una {
+    float: left;
+    margin-left: 5px;
+    margin-top: 10px;/*12*/
+    margin-right: -33px;
 }

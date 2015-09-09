@@ -81,7 +81,7 @@ body {
     font-weight: 400
 }
 
-:focus {
+*:focus {
     outline-color: transparent;
     outline-style: none
 }
@@ -89,6 +89,8 @@ body {
 body {
     margin: 0 auto;
     text-align: center;
+    width: 100%;
+    overflow-x: hidden;
     min-width: 320px;
     background-color: #EDF1E1;
 }
@@ -98,6 +100,7 @@ body {
     margin-bottom: 100px;
     text-align: center;
 }
+
 
 
 /******************* ENCABEZADO *********************/
@@ -286,7 +289,7 @@ td.right {
     display: block;
     float: right;
     margin-right: 10px;
-    margin-top: -10px;
+    margin-top: -13px;
 }
 
 #slider {
@@ -294,18 +297,23 @@ td.right {
     margin: 0 auto;
     text-align: center;
     width: 60%;
-    height: 10px;
+    height: 12px;
     background-color: #777;
     border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 #paso {
     margin: 0;
     text-align: left;
     width: 0%;
-    height: 10px;
+    height: 12px;
     background: #57c3ec;
     border-radius: 5px;
+}
+
+*, html {
+	-webkit-tap-highlight-color: transparent;
 }
 
 #audioDiv .botones {

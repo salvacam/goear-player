@@ -15,6 +15,10 @@
                         {
                             "xml": "<feature name=\"Notification\"><param name=\"firefoxos-package\" value=\"Notification\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<permission name=\"systemXHR\" privileged=\"true\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -38,6 +42,12 @@
             "PACKAGE_NAME": "mx.x10.salvacam.goear"
         },
         "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "mx.x10.salvacam.goear"
+        },
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "mx.x10.salvacam.goear"
+        },
+        "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "mx.x10.salvacam.goear"
         }
     },

@@ -27,6 +27,14 @@
                         {
                             "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -77,8 +85,17 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 2
                         }
                     ]
+                }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": []
                 }
             }
         }
@@ -94,6 +111,12 @@
             "PACKAGE_NAME": "mx.x10.salvacam.goear"
         },
         "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "mx.x10.salvacam.goear"
+        },
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "mx.x10.salvacam.goear"
+        },
+        "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "mx.x10.salvacam.goear"
         }
     },
