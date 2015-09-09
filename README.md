@@ -1,7 +1,7 @@
 <h3>Goear Player</h3>
 Reproductor en html5 de Goear.
 
-Permite la busqueda, descarga (por ahora solo en Firefox OS) y reproducción de canciones, playlist o radio
+Permite la busqueda, descarga (para Firefox OS y Android) y reproducción de canciones, playlist o radio
 
 <a href="http://salvacam.x10.mx/goear" target="_blank">Aplicación</a>
 <br/>
