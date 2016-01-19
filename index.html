@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="icon" href="img/icono32.png">
 		<meta charset="UTF-8">
 		<title>Goear Player</title>
-		
-		<!-- phonegap -->
-		<script src="cordova.js"></script>
+
 		<script src="js/zepto.min.js"></script>
-		<script src="js/funciones.js"></script>
 		<meta name="viewport" content="width=device-width">
 
 		<link rel="stylesheet" href="css/style.css">
@@ -15,43 +13,53 @@
 	</head>
 
 	<body>
-		<div id="encabezado">
-			<div id="primera_encabezado">
-				<label for="nombre">Goear Player</label>
-				<span id="salir">X</span>
-			</div>	
-			<div id="segunda_encabezado">
-				<input type="text" class="text-input" name="nombre" id="nombre" value="Search Name" />
-				
-			</div>
-			<div id="tercera_encabezado">
-				<button class="topcoat-button--large" id="buscar_canciones" >Songs</button>
-				<button class="topcoat-button--large" id="buscar_playlist" >Playlist</button>
-				<button class="topcoat-button--large" id="buscar_radio" >Radio</button>
-			</div>			
-		</div>
-		<div id="content">
-			<div id="listado">	
-			</div>			
-			<div id="cargando" style="display:none;" ><img src="img/loader.gif"/></div>
-		</div>		
-		<div id="audioDiv" style="display:none;" class="">
-			<div id="linea-tiempo">
-				<span id="time">0:00</span>
-				<div id="slider">
-					<div id="paso">
-					</div>
+		<div id="encabezado" >
+			<div class="row maximo">
+				<div id="primera_encabezado" class="col c4">
+					<h3><label for="nombre">Goear Player</label></h3>
+				</div>	
+				<div id="segunda_encabezado" class="col c4">
+					<input type="text" class="smooth" name="nombre" id="nombre" value="" placeholder="Search Area" />
 				</div>
-				<span id="duration">0:00</span>
+				<div id="tercera_encabezado" class="col c4">
+					<button class="btn btn-sm smooth" id="buscar_canciones" >Songs</button>
+					<button class="btn btn-sm smooth" id="buscar_playlist" >Playlist</button>
+					<button class="btn btn-sm smooth" id="buscar_radio" >Radio</button>
+				</div>
 			</div>
-			<span id="descargar_una" class='descargar'>Down<br/>Actual</span>
-			<div id="botones">
-				<button id='atras' class='pure-button topcoat-button none botones'>&Lt;</button>
-				<button id='play' class='pure-button topcoat-button none botones'>&gt;</button>
-				<button id='adelante' class='pure-button topcoat-button none botones'>&Gt;</button>
+		</div>
+		<div id="content" class="maximo">
+			<div id="listado">	
 			</div>
-			<span id="descargar_todas" class='descargar'>Down<br/>All</span>
-			<audio no-controls autoplay id="audio">
+		</div>
+		<div id="audioDiv" style="display:none;" class="">
+			<div id="barra-tiempo" class="maximo">
+				<span id="time">0</span>
+				&nbsp;
+				<!-- <input type="range" class="barra" id="slider" value="0" min="0" max="100" > -->
+
+					<div id="slider">
+						<div id="paso">
+						</div>
+					</div>
+				&nbsp;
+				<span id="duration">0</span>
+			</div>
+			
+			<div class="row maximo">
+				<div id="botones" class="mitad">
+					<button id='atras' class="btn btn-sm smooth">&Lt;</button>
+					<button id='play' class="btn btn-a btn-sm smooth">&gt;</button>
+					<button id='adelante'  class="btn btn-sm smooth">&Gt;</button>
+				</div>
+			
+				<div id="bot-altavoz" class="mitad">
+					<span id="altavoz" class="btn btn-sm smooth">&vltri;</span>				
+					<input type="range" id="volumen" value="100" />				
+				</div>
+			</div>
+			
+			<audio no-controls id="audio">
 			</audio>
 		</div>
 		<script src="js/main.js"></script>    

@@ -48,7 +48,9 @@ if ($_GET["type"] == "playlist") {
                 }
                 $salida = substr($salida, 0, -1);
                 echo $salida . ']';
-            }
+            } else {
+				echo '[0]';
+			}
         } else {
             echo '[0]'; // parametro no es una url
         }
