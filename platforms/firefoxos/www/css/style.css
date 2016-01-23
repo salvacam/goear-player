@@ -192,6 +192,18 @@ body {
     margin-left: 6px;
 }
 
+#salir {
+    display: block;
+    float: right;
+    margin-right: 5px;
+    padding: 1px 5px;
+    font-size: 0.75em;
+    background-color: #575757;
+    color: #C6C8C8;
+    border-radius: 6px;
+    border: 1px solid #333434;
+    margin-top: 0px;
+}
 
 /******************* LISTADO *********************/
 
@@ -321,4 +333,28 @@ td.right {
     margin-right: 10px;
     line-height: 2.25rem;
     padding: 0 1.0rem;
+}
+
+.descargar {
+    display: block;
+    padding: 1px 2px;
+    font-size: 0.75em;
+    background-color: #575757;
+    color: #C6C8C8;
+    border-radius: 6px;
+    border: 1px solid #333434;
+    font-size: 0.55em;
+}
+
+#descargar_todas {
+    float: right;
+    margin-right: 5px;
+    margin-top: -30px;
+}
+
+#descargar_una {
+    float: left;
+    margin-left: 5px;
+    margin-top: 10px;/*12*/
+    margin-right: -33px;
 }

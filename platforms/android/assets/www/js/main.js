@@ -72,8 +72,15 @@ function desactivar_eventos() {
     $("#adelante").off();
     audio.pause();
     pause = 1;
+    pause_headphone = 0;
+    pause_orientation = 0;
+    next_orientation = 0;
     $("#paso").css("width", "0");
     $("#slider").off();
+    
+    if (window.DeviceMotionEvent) {
+        window.removeEventListener('devicemotion', function() {});
+    }
 }
 
 function adelante() {
@@ -226,7 +233,7 @@ function buscar_canciones(nombre, pagina, vuelve_atras) {
                             posicion = 0;
                             console.log("mal");
                             escuchar(lista[posicion], posicion);
-                            desplazarse(lista[posicion][0]);
+                            window.location.hash = '#' + lista[posicion][0];
                         } else {
                             posicion = lista.length - 1;
                             escuchar(lista[posicion], posicion);
@@ -483,7 +490,7 @@ function buscar_radio(nombre, pagina) {
 
 //alert("escuchar");
 
-function escuchar(id, pos) {	
+function escuchar(id, pos) {
 	/*
 	if ( navigator.network.connection.type != "wifi" ) {
 		navigator.notification.alert('The version of this app only plays songs with Wi-Fi', null, 'Not connected to wifi.', 'Ok');			
@@ -493,7 +500,8 @@ function escuchar(id, pos) {
 		desactivar_eventos();
 		$("#audioDiv").css("display", "block");
 		//$("#audio").attr("src", "http://localhost/radio/index.php?type=listen&url=" + encodeURI(id[0]));
-		$("#audio").attr("src", "http://www.goear.com/action/sound/get/" + encodeURI(id[0]));
+		//$("#audio").attr("src", "http://www.goear.com/action/sound/get/" + encodeURI(id[0]));
+		$("#audio").attr("src", 'http://goear.com/plimiter.php?f=' + encodeURI(id[0]));
 		$("#audio").attr("autoplay", "");
 
 		$(".lista").each(function () {
@@ -515,7 +523,7 @@ function escuchar(id, pos) {
 				console.log("play");
 				$('#play').html("||");
 				audio.play();
-				pause = 0;
+				pause = 0;             
 			}
 		});
 
@@ -548,7 +556,68 @@ function escuchar(id, pos) {
 			adelante();
 		});
 
-		audio.play();
+        var last_time = new Date().getTime();
+
+        if (window.DeviceMotionEvent) {
+            //alert('devicemotion supported');
+            window.addEventListener('devicemotion', function(ev) {                
+                
+                var curr_time = new Date().getTime();
+                if (curr_time < last_time + 500) {
+                    return;
+                } else {
+                    last_time = curr_time;
+                    var acc = ev.accelerationIncludingGravity;
+
+                    ax = acc.x;
+                    ay = acc.y;
+                    az = acc.z;
+
+                    aax = ax ? ax.toFixed(3) : '';
+                    aay = ay ? ay.toFixed(3) : '';
+                    aaz = az ? az.toFixed(3) : '';
+
+                    $('#aX').text(aax);
+                    $('#aY').text(aay);
+                    $('#aZ').text(aaz);                    
+
+                    //if ( (aax < 3 && aax > -3) && ( aay < -6 ) && (aaz < 3 && aaz > -3) ) {  
+                    if ( aax > 7 && aay < 3 && aay > -3 ){ //} && aaz < 3 && aaz > -3 ) {  
+                        if ( pause_orientation > 2 ) {                         
+                            if ( pause == 0 ) {
+                                console.log("pause. orientacion");
+                                $('#play').html("&gt;");
+                                audio.pause();
+                                pause = 1;
+                                pause_orientation = 0;
+                            } else if ( pause == 1 ) {                                
+                                console.log("play. orientacion");
+                                $('#play').html("||");
+                                audio.play();
+                                pause = 0;
+                                pause_orientation = 0;
+                            }
+                        } else {
+                            pause_orientation += 1;                        
+                        }
+                    } else {
+                        pause_orientation = 0;
+                    }
+
+                     if ( aax < -7 && aay < 3 && aay > -3 ){ //} && aaz < 3 && aaz > -3 ) {  
+                        if ( next_orientation > 5 ) {                         
+                            adelante();
+                        } else {
+                            next_orientation += 1;
+                        }
+                    } else {                        
+                        next_orientation = 0;
+                    }
+                }
+            }, false);
+        }
+
+        audio.play();
 
 		$("#duration").html(tiempoToSeg(id[1]));
 		$("#audio").on('play', function () {
@@ -556,6 +625,26 @@ function escuchar(id, pos) {
 			intervalo = setInterval(function () {
 				$("#time").html(tiempoToSeg(audio.currentTime));
 				$("#paso").css("width", porcentaje(audio.currentTime, id[1]) + "%");
+
+                //pausar si no estan conectados los cascos
+                /*
+                window.plugins.headsetdetection.detect(function(detected) {
+                    //alert(detected +" - cascos");
+                    if (!detected) {
+                        if (pause == 0 && pause_headphone == 1) {                            
+                            console.log("pause. se ha quitado los cascos");
+                            $('#play').html("&gt;");
+                            audio.pause();
+                            pause = 1;
+                            pause_headphone = 0;
+                            clearInterval(intervalo);
+                            //alert("pause. se ha quitado los cascos");
+                        }
+                    } else {
+                        pause_headphone = 1;
+                    }
+                });
+                */
 			}, 500);
 
 			$("#duration").html(tiempoToSeg(id[1]));
@@ -566,7 +655,7 @@ function escuchar(id, pos) {
 		audio.oncanplay = function () {
 			$("#time").html(tiempoToSeg(audio.currentTime));
 			$("#duration").html(tiempoToSeg(id[1]));
-			audio.play();
+            audio.play();
 		}
 		
 		audio.onerror = function () {
@@ -582,6 +671,7 @@ function escuchar(id, pos) {
 				audio.oncanplay = function () {};
 			}
 		};
+
 		//alert(id[1]);
 		$("#slider").on("click", function (e) {
 			//alert(id[1]);
@@ -610,10 +700,13 @@ function escuchar(id, pos) {
 		});
 	//}
 }
-//alert("2");
+
 
 //NOTIFICACION PHONEGAP
 document.addEventListener('deviceready', function () {
+
+   
+
     //alert(navigator.network.connection.type);
     //alert(device.platform);
     if (device.platform == "firefoxos") {
@@ -660,8 +753,13 @@ document.addEventListener('deviceready', function () {
 	$("#salir").on("click", function(e){
 		onBackKeyDown(e);
 	});
+	
+
 
 }, false);
+
+
+
 
 //alert("3");
 //NOTIFICACION FIREFOX OS
@@ -731,14 +829,20 @@ window.addEventListener('unload', function () {
 });
 
 function guardar(id, name){			
-	navigator.notification.confirm(
-            'Downloading the current song?', // message
-            function(buttonIndex){
-				download_one(buttonIndex, id, name);
-			},
-            'Download', // title
-			['Yes', 'Cancel'] // buttonLabels
-    );
+	/*
+	if ( navigator.network.connection.type != "wifi" ) {
+		navigator.notification.alert('The version of this app only plays songs with Wi-Fi', null, 'Not connected to wifi.', 'Ok');			
+	} else {
+		*/
+		navigator.notification.confirm(
+				'Downloading the current song?', // message
+				function(buttonIndex){
+					download_one(buttonIndex, id, name);
+				},
+				'Download', // title
+				['Yes', 'Cancel'] // buttonLabels
+		);
+	//}
 }
 
 function download_one(buttonIndex, id, name) {
@@ -764,7 +868,8 @@ function existe_archivo(nombre, contador, id, mostrar_mensaje){
 				fileURL = "cdvfile://localhost/persistent/goear/"+nombre+"_"+contador+".mp3";
 			}	
 			var fileTransfer = new FileTransfer();
-			url = "http://www.goear.com/action/sound/get/" + encodeURI(id);
+			//url = "http://www.goear.com/action/sound/get/" + encodeURI(id);
+			url = 'http://goear.com/plimiter.php?f=' + encodeURI(id);
 			
 			fileTransfer.download(
 				url,
@@ -783,13 +888,19 @@ function existe_archivo(nombre, contador, id, mostrar_mensaje){
 		});    
     }); 
 }
-function guardar_listado() { 
-	navigator.notification.confirm(
-            'Downloading the list of song?', // message
-            download_all,
-            'Download', // title
-			['Yes', 'Cancel'] // buttonLabels
-    );
+function guardar_listado() { 	
+	/*
+	if ( navigator.network.connection.type != "wifi" ) {
+		navigator.notification.alert('The version of this app only plays songs with Wi-Fi', null, 'Not connected to wifi.', 'Ok');			
+	} else {
+		*/
+		navigator.notification.confirm(
+				'Downloading the list of song?', // message
+				download_all,
+				'Download', // title
+				['Yes', 'Cancel'] // buttonLabels
+		);
+	//}
 }
 function download_all(buttonIndex) {
     if (buttonIndex == 1) {		

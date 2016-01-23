@@ -26,28 +26,10 @@
         }
     },
     "installed_plugins": {
-        "android.support.v4": {
-            "PACKAGE_NAME": "mx.x10.salvacam.goear"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "mx.x10.salvacam.goear"
         },
-        "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "mx.x10.salvacam.goear"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "mx.x10.salvacam.goear"
-        },
-        "de.appplant.cordova.plugin.local-notification": {
-            "PACKAGE_NAME": "mx.x10.salvacam.goear"
-        },
         "org.apache.cordova.network-information": {
-            "PACKAGE_NAME": "mx.x10.salvacam.goear"
-        },
-        "org.apache.cordova.file": {
-            "PACKAGE_NAME": "mx.x10.salvacam.goear"
-        },
-        "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "mx.x10.salvacam.goear"
         }
     },

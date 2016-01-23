@@ -8,13 +8,15 @@
         Salvador Camacho
     </author>
     <content src="index.html" />
-    <plugin name="cordova-plugin-device"/>
+    <plugin name="cordova-plugin-device" />
     <plugin name="cordova-plugin-whitelist" version="1" />
-    <plugin name="de.appplant.cordova.plugin.local-notification"/>
-    <plugin name="cordova-plugin-dialogs"/>
-    <plugin name="org.apache.cordova.network-information"/>
-    <plugin name="org.apache.cordova.file"/>
-    <plugin name="org.apache.cordova.file-transfer"/>
+    <plugin name="de.appplant.cordova.plugin.local-notification" />
+    <plugin name="cordova-plugin-dialogs" />
+    <plugin name="org.apache.cordova.network-information" />
+    <plugin name="org.apache.cordova.file" />
+    <plugin name="org.apache.cordova.file-transfer" />
+    <!-- <plugin name="nl.x-services.plugins.headsetdetection" /> -->
+    
     
     <access origin="*" />
     <allow-intent href="http://*/*" />

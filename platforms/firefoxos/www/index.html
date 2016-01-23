@@ -7,9 +7,11 @@
 		<!-- phonegap -->
 		<script src="cordova.js"></script>
 		<script src="js/zepto.min.js"></script>
+		<script src="js/funciones.js"></script>
 		<meta name="viewport" content="width=device-width">
 
 		<link rel="stylesheet" href="css/style.css">
+		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 		
 	</head>
 
@@ -17,6 +19,7 @@
 		<div id="encabezado">
 			<div id="primera_encabezado">
 				<label for="nombre">Goear Player</label>
+				<span id="salir">X</span>
 			</div>	
 			<div id="segunda_encabezado">
 				<input type="text" class="text-input" name="nombre" id="nombre" value="Search Name" />
@@ -28,6 +31,11 @@
 				<button class="topcoat-button--large" id="buscar_radio" >Radio</button>
 			</div>			
 		</div>
+		<!--
+		<p><label for="aX">aX= </label><span id="aX"></span></p>
+    	<p><label for="aY">aY= </label><span id="aY"></span></p>
+    	<p><label for="aZ">aZ= </label><span id="aZ"></span></p>
+    	<p><label for="aT">aT= </label><span id="aT"></span></p> -->
 		<div id="content">
 			<div id="listado">	
 			</div>			
@@ -42,14 +50,16 @@
 				</div>
 				<span id="duration">0:00</span>
 			</div>
+			<span id="descargar_una" class='descargar'>Down<br/>Actual</span>
 			<div id="botones">
 				<button id='atras' class='pure-button topcoat-button none botones'>&Lt;</button>
 				<button id='play' class='pure-button topcoat-button none botones'>&gt;</button>
 				<button id='adelante' class='pure-button topcoat-button none botones'>&Gt;</button>
 			</div>
+			<span id="descargar_todas" class='descargar'>Down<br/>All</span>
 			<audio no-controls autoplay id="audio">
 			</audio>
 		</div>
-		<script src="js/main.js"></script>    
+		<script src="js/main.js"></script>    		
 	</body>
 </html>

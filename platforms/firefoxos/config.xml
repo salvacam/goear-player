@@ -10,16 +10,16 @@
     <feature name="Notification">
         <param name="firefoxos-package" value="Notification" />
     </feature>
+    <permission name="systemXHR" privileged="true" />
     <name>Goear Player</name>
     <description>
         Reproductor goear
     </description>
-    <author email="salvacams@gmail.com" href="http://salvacam.x10.mx">
+    <author email="salvacams@gmail.com" href="https://github.com/salvacam">
         Salvador Camacho
     </author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
-    <permission name="systemXHR" privileged="true" />
 </widget>
