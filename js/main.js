@@ -293,6 +293,7 @@ function listar(radio, nombre, numero_canciones, duracion) {
 			var tmpkk = xhr.responseText;
 			var data = JSON.parse(xhr.responseText);           
 			$("#listado").append("<button id='volver' class='btn btn-sm smooth'>&crarr; Back</button>");
+			$("#listado").append("<h3>" + nombre + "</h3>");
 			lista = [];  
 			var incluir = '<table class="table">'+
 				'<thead><tr><th>Artist</th><th>Title</th></tr></thead><tbody>';
