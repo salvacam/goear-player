@@ -1,3 +1,4 @@
+var URL_PROXY = 'http://salvacam.net78.net/goear/servidor.php';
 var lista = [];
 var nombre_busqueda = "";
 var reproducir_mas_canciones = false;
@@ -135,7 +136,7 @@ function buscar_canciones(nombre, pagina, vuelve_atras) {
     
 	var xhr = new XMLHttpRequest({mozSystem: true});
 	//si se usa en navegador usar esta url 
-	xhr.open("GET", "http://salvacam.x10.mx/radio/index.php?type=songs&url=" + encodeURI(nombre)+"&p="+pagina, true);
+	xhr.open("GET", URL_PROXY + "?type=songs&url=" + encodeURI(nombre)+"&p="+pagina, true);
 	//xhr.open("GET", "http://www.goear.com/apps/android/search_songs_json.php?q=" + encodeURI(nombre) + "&p=" + pagina, false);	
 	xhr.onreadystatechange = function() {				
 		if (xhr.readyState == 4) {
@@ -158,8 +159,8 @@ function buscar_canciones(nombre, pagina, vuelve_atras) {
 			incluir += "</tbody></table>";
 			$("#listado").append(incluir);
 			var xhr1 = new XMLHttpRequest({mozSystem: true});
-			xhr1.open("GET", "http://salvacam.x10.mx/radio/index.php?type=songs&url=" + encodeURI(nombre)+"&p="+(pagina+1), true);
-			console.log("http://salvacam.x10.mx/radio/index.php?type=songs&url=" + encodeURI(nombre)+"&p="+(pagina+1));
+			xhr1.open("GET", URL_PROXY + "?type=songs&url=" + encodeURI(nombre)+"&p="+(pagina+1), true);
+			console.log(URL_PROXY + "?type=songs&url=" + encodeURI(nombre)+"&p="+(pagina+1));
 			//xhr1.open("GET", "http://www.goear.com/apps/android/search_songs_json.php?q=" + encodeURI(nombre) + "&p=" + (pagina+1), false);
 			xhr1.onreadystatechange = function() {				
 				if (xhr1.readyState == 4) {				
@@ -213,7 +214,7 @@ function buscar_playlist(nombre, pag) {
 
     var xhr = new XMLHttpRequest({mozSystem: true});
     //si se usa en navegador usar esta url 
-    xhr.open("GET", "http://salvacam.x10.mx/radio/index.php?type=playlist&url=" + encodeURI(nombre) +"&p="+pag, true);
+    xhr.open("GET", URL_PROXY + "?type=playlist&url=" + encodeURI(nombre) +"&p="+pag, true);
     //xhr.open("GET", "http://www.goear.com/apps/android/search_playlist_json.php?q=" + encodeURI(nombre) +"&p="+pag, false);
 	xhr.onreadystatechange = function() {				
 		if (xhr.readyState == 4) {
@@ -243,7 +244,7 @@ function buscar_playlist(nombre, pag) {
 				incluir += "</tbody></table>";			
 				$("#listado").append(incluir);
 				var xhr1 = new XMLHttpRequest({mozSystem: true});
-				xhr1.open("GET", "http://salvacam.x10.mx/radio/index.php?type=playlist&url=" + encodeURI(nombre) +"&p="+(pag+1), false);
+				xhr1.open("GET", URL_PROXY + "?type=playlist&url=" + encodeURI(nombre) +"&p="+(pag+1), false);
 				//xhr1.open("GET", "http://www.goear.com/apps/android/search_playlist_json.php?q=" + encodeURI(nombre) +"&p="+(pag+1), false);
 				xhr1.onreadystatechange = function() {				
 					if (xhr1.readyState == 4) {				
@@ -286,7 +287,7 @@ function listar(radio, nombre, numero_canciones, duracion) {
 	var xhr = new XMLHttpRequest({mozSystem: true});
 	//xhr.open("GET", "http://www.goear.com/apps/android/playlist_songs_json.php?v=" + encodeURI(radio), false);
 	//si se usa en navegador usar esta url 
-	xhr.open("GET", "http://salvacam.x10.mx/radio/index.php?type=list&url=" + encodeURI(radio), true);
+	xhr.open("GET", URL_PROXY + "?type=list&url=" + encodeURI(radio), true);
 	xhr.onreadystatechange = function() {				
 		if (xhr.readyState == 4) {
 			$("#listado").empty(); 
@@ -387,7 +388,7 @@ function buscar_radio(nombre, pagina) {
     var contentType = "application/x-www-form-urlencoded; charset=utf-8";
     $.ajax({
         type: 'GET',
-        url: "http://salvacam.x10.mx/radio/index.php?type=radio&url=" + encodeURI(nombre) +"&p="+pagina,
+        url: URL_PROXY + "?type=radio&url=" + encodeURI(nombre) +"&p="+pagina,
         dataType: 'json',
         success: function (data) {
             $("#listado").empty();
