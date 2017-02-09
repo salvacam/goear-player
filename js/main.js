@@ -1,4 +1,4 @@
-var URL_PROXY = 'http://salvacam.net78.net/goear/servidor.php';
+var URL_PROXY = 'https://featherbrained-exec.000webhostapp.com/goear/servidor.php';
 var lista = [];
 var nombre_busqueda = "";
 var reproducir_mas_canciones = false;
