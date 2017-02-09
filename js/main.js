@@ -78,6 +78,7 @@ function desactivar_eventos(){
 	console.log("desactivar eventos");
     $("#audio").off();
     $("#play").off();
+    $("body").off();
     $("#atras").off();
     $("#adelante").off();
     audio.pause();
@@ -481,8 +482,9 @@ function escuchar(id, pos) {
         window.location.hash = '#'+lista[pos];
         escuchar(lista[pos], pos);
     });
-    $("#play").on("click", function () {
-		console.log("Play/Pause");
+
+    function playPause() {
+    	console.log("Play/Pause");
 		if (pause == 0) {
 			console.log("pause");
 			$('#play').html("&gt;");
@@ -494,7 +496,35 @@ function escuchar(id, pos) {
 			audio.play();
 			pause = 0;
 		}
+    };
+
+    $("#play").on("click", function () {
+		playPause();
 	});
+
+	var down = {18: false, 80: false, 225: false}
+
+	$('body').on('keydown', function(e) {
+		if (e.keyCode === 18 || e.keyCode === 225 || e.keyCode === 80 || e.keyCode === 77) {
+			down[e.keyCode] = true;
+		}
+	});
+
+	$('body').on('keyup', function(e) {
+		// Alt 				Alt Gr 			p
+		if ((down[18] || down[225])  && down[80]) {
+    		playPause();
+		}
+
+		if ((down[18] || down[225])  && down[77]) {
+			mute();
+		}
+
+		if (e.keyCode === 18 || e.keyCode === 225 || e.keyCode === 80 || e.keyCode === 77) {
+			down[e.keyCode] = false;
+		}
+	});
+
     $("#atras").on("click", function () {
         if (pos > 0) {
             pos--;            
@@ -553,10 +583,7 @@ function escuchar(id, pos) {
 		});
 }
 
-
-var altavoz = 1;
-//Evento click en altavoz
-$("#altavoz").on("click", function () {
+function mute() {
 	if ( altavoz == 0 ) {
 		altavoz = 1;
 		console.log('activar sonido');
@@ -568,6 +595,13 @@ $("#altavoz").on("click", function () {
 		$("#altavoz").html('&nltri;');
 		audio.muted = true;
 	}
+}
+
+
+var altavoz = 1;
+//Evento click en altavoz
+$("#altavoz").on("click", function () {
+	mute();
 });
 
 $('#volumen').mousemove( function(){
