@@ -334,13 +334,13 @@ function buscar_radio1(nombre, pagina) {
     $("#listado").append('<div id="cargando" class="clear-loading loading-effect-3"><div><span></span></div></div>');
 
 	var xhr = new XMLHttpRequest({mozSystem: true});
-	xhr.open("POST", "http://www.goear.com/action/bands/getrelatedband", false);	
+	xhr.open("POST", "https://www.goear.com/action/bands/getrelatedband", false);	
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	
 	xhr.onreadystatechange = function() {				
 		if (xhr.readyState == 4) { 			
 			var xhr1 = new XMLHttpRequest({mozSystem: true});
-			xhr1.open("POST", "http://www.goear.com/action/bands/getrelatedbandsounds", false);	
+			xhr1.open("POST", "https://www.goear.com/action/bands/getrelatedbandsounds", false);	
 			xhr1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 			
 			xhr1.onreadystatechange = function() {				
@@ -428,7 +428,7 @@ function escuchar(id, pos) {
 	desactivar_eventos();
     var audio = document.getElementById('audio');
     $("#audioDiv").css("display", "block");
-    $("#audio").attr("src", "http://www.goear.com/action/sound/get/" + encodeURI(id));
+    $("#audio").attr("src", "https://www.goear.com/action/sound/get/" + encodeURI(id));
     $("#audio").attr("autoplay", "");
 
     audio.oncanplay = function () {
