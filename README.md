@@ -9,4 +9,4 @@ Teclas rápidas:
 * Mute alt + m
 * Play alt + p
 
-<a href="https://salvacam.github.io/goear-player/" target="_blank">Aplicación</a>
+<a href="http://salvacam.github.io/goear-player/" target="_blank">Aplicación</a>
