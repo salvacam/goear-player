@@ -6,7 +6,7 @@ Permite la busqueda y reproducción de canciones, playlist o radio
 
 
 Teclas rápidas: 
-* Mute alt + m
-* Play alt + p
+* Mute: alt + m
+* Play: alt + p
 
 <a href="http://salvacam.github.io/goear-player/" target="_blank">Aplicación</a>
