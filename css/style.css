@@ -73,7 +73,11 @@ body {
 	}
 
 }
-
+@media(max-width:600px) {
+	#fork { 
+		display: none;
+	}
+}
 
 /******************* LISTADO *********************/
 
