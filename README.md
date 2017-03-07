@@ -1,6 +1,6 @@
 <h3>Goear Player</h3>
 <hr/>
-Reproductor en html5 de Goear.
+Reproductor en HTML5 de Goear.
 
 Permite la busqueda y reproducción de canciones, playlist o radio
 
