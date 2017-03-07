@@ -9,11 +9,11 @@
 		<meta name="viewport" content="width=device-width">
 
 		<link rel="stylesheet" href="css/style.css">
-		
+
 	</head>
 
 	<body>
-		<a id="fork" href="https://github.com/salvacam/goear-player" target="_blank">
+		<a id="fork" href="https://github.com/salvacam/goear-player" target="_blank" tabindex="-1">
 			<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png">
 		</a>
 
@@ -21,19 +21,19 @@
 			<div class="row maximo">
 				<div id="primera_encabezado" class="col c4">
 					<h3><label for="nombre">Goear Player</label></h3>
-				</div>	
+				</div>
 				<div id="segunda_encabezado" class="col c4">
-					<input type="text" class="smooth" name="nombre" id="nombre" value="" placeholder="Search Area" />
+					<input type="text" class="smooth" name="nombre" id="nombre" value="" placeholder="Search Area" tabindex="1"/>
 				</div>
 				<div id="tercera_encabezado" class="col c4">
-					<button class="btn btn-sm smooth" id="buscar_canciones" >Songs</button>
-					<button class="btn btn-sm smooth" id="buscar_playlist" >Playlist</button>
-					<button class="btn btn-sm smooth" id="buscar_radio" >Radio</button>
+					<button class="btn btn-sm smooth" id="buscar_canciones" tabindex="2">Songs</button>
+					<button class="btn btn-sm smooth" id="buscar_playlist" tabindex="3">Playlist</button>
+					<button class="btn btn-sm smooth" id="buscar_radio" tabindex="4">Radio</button>
 				</div>
 			</div>
 		</div>
 		<div id="content" class="maximo">
-			<div id="listado">	
+			<div id="listado">
 			</div>
 		</div>
 		<div id="audioDiv" style="display:none;" class="">
@@ -49,23 +49,23 @@
 				&nbsp;
 				<span id="duration">0</span>
 			</div>
-			
+
 			<div class="row maximo">
 				<div id="botones" class="mitad">
-					<button id='atras' class="btn btn-sm smooth">&Lt;</button>
-					<button id='play' class="btn btn-a btn-sm smooth">&gt;</button>
-					<button id='adelante'  class="btn btn-sm smooth">&Gt;</button>
+					<button id='atras' class="btn btn-sm smooth" tabindex="10">&Lt;</button>
+					<button id='play' class="btn btn-a btn-sm smooth" tabindex="11">&gt;</button>
+					<button id='adelante'  class="btn btn-sm smooth" tabindex="12">&Gt;</button>
 				</div>
-			
+
 				<div id="bot-altavoz" class="mitad">
-					<span id="altavoz" class="btn btn-sm smooth">&vltri;</span>				
-					<input type="range" id="volumen" value="100" />				
+					<span id="altavoz" class="btn btn-sm smooth" tabindex="13">&vltri;</span>
+					<input type="range" id="volumen" value="100" tabindex="14"/>
 				</div>
 			</div>
-			
+
 			<audio no-controls id="audio">
 			</audio>
 		</div>
-		<script src="js/main.js"></script>    
+		<script src="js/main.js"></script>
 	</body>
 </html>
